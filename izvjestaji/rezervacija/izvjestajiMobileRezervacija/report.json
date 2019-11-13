@@ -1,0 +1,17 @@
+{
+  "tests" : [ {
+    "name" : "mobileRezervacija.gspec",
+    "startedAt" : 1573657886556,
+    "endedAt" : 1573657897016,
+    "failed" : false,
+    "statistic" : {
+      "passed" : 18,
+      "errors" : 0,
+      "warnings" : 0,
+      "total" : 18
+    },
+    "testId" : "1-mobilerezervacija.gspec",
+    "duration" : 10460,
+    "failed" : false
+  } ]
+}

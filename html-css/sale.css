@@ -1,0 +1,155 @@
+.meni {
+    background-color: #71A0CC;
+    text-align: center;
+    padding: 25px;
+    margin-top: 50px;
+    margin-right: 50px;
+    margin-left: 50px;
+    border: 1px solid limegreen;
+    font-family: Arial;
+}
+
+.meni img {
+    object-fit: cover;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 25px;
+}
+
+#linkovi {
+    margin-bottom: -30px;
+}
+
+ul li {
+    display: inline;
+}
+
+li+li {
+    margin-left: 15px;
+}
+
+a:visited {
+    color: black;
+}
+
+#aktivniTab {
+    text-decoration: none;
+}
+
+
+/*-------------------------------*/
+
+.sadrzaj {
+    background-color: #71A0CC;
+    text-align: center;
+    padding: 100px;
+    margin-top: 10px;
+    margin-right: 50px;
+    margin-left: 50px;
+    border: 1px solid limegreen;
+}
+
+table {
+    margin-top: -85px;
+    margin-bottom: -90px;
+    border: 1px solid;
+    border-collapse: collapse;
+    font-family: Arial;
+}
+
+td {
+    text-align: center;
+    padding: 5px;
+    border: solid 1px gray;
+    background-color: white;
+    height: 30px;
+    vertical-align: top;
+}
+
+.tabelaSala {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table td:nth-child(2),
+td:nth-child(3),
+td:nth-child(4),
+td:nth-child(5) {
+    width: 35px;
+}
+
+table td:nth-child(6) {
+    width: 50px;
+    text-align: left;
+    vertical-align: top;
+}
+
+table tr:nth-child(2) td {
+    height: 45px;
+}
+
+table tr:nth-child(2) td:nth-child(6) {
+    vertical-align: middle;
+}
+
+.headerRedni {
+    background-color: #CCCCCC;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.headerSprat {
+    background-color: #B3B3B3;
+    text-align: center;
+    vertical-align: middle;
+    height: 45px;
+}
+
+table tr:nth-child(2) td:nth-child(n+2) {
+    text-align: right;
+}
+
+table tr:nth-child(2) td:nth-child(1) {
+    vertical-align: bottom;
+}
+
+table tr:first-child td:first-child {
+    background-color: #71A0CC;
+    border-left: solid 1px #71A0CC;
+    border-top: solid 1px #71A0CC;
+}
+
+.slobodnaSala {
+    background-color: #02FE4F;
+}
+
+.zauzetaSala {
+    background-color: #FF614E;
+}
+
+.kancelarija {
+    background-color: #AFC3DC;
+}
+
+@media only screen and (max-width: 600px) {
+    ul li {
+        display: block;
+        margin-right: 40px;
+    }
+    td {
+        min-width: 35px;
+    }
+    .tabelaSala {
+        margin-left: -55px;
+    }
+    table tr:nth-child(2) {
+        display: none;
+    }
+    table tr:first-child {
+        display: none;
+    }
+    table td:first-child {
+        display: none;
+    }
+}

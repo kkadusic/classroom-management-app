@@ -1,0 +1,92 @@
+.meni {
+    background-color: #71A0CC;
+    text-align: center;
+    padding: 25px;
+    margin-top: 50px;
+    margin-right: 50px;
+    margin-left: 50px;
+    border: 1px solid limegreen;
+    font-family: Arial;
+}
+
+.meni img {
+    object-fit: cover;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 25px;
+}
+
+#linkovi {
+    margin-bottom: -30px;
+}
+
+ul li {
+    display: inline;
+}
+
+li+li {
+    margin-left: 15px;
+}
+
+a:visited {
+    color: black;
+}
+
+#aktivniTab {
+    text-decoration: none;
+}
+
+
+/*----------------------------*/
+
+.sadrzaj {
+    background-color: #71A0CC;
+    margin-top: 10px;
+    margin-right: 50px;
+    margin-left: 50px;
+    border: 1px solid limegreen;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sadrzaj img {
+    margin-left: 30px;
+    margin-right: 30px;
+    width: 345px;
+    height: 200px;
+}
+
+.kolona {
+    flex: 33%;
+    max-width: 30%;
+    padding: 0 7px;
+}
+
+.kolona img {
+    margin-top: 20px;
+    vertical-align: middle;
+    width: 100%;
+}
+
+@media screen and (max-width: 850px) {
+    .kolona {
+        flex: 50%;
+        max-width: 45%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .kolona {
+        flex: 70%;
+        max-width: 70%;
+    }
+    ul li {
+        display: block;
+        margin-right: 40px;
+    }
+    .sadrzaj img {
+        width: 276px;
+        height: 160px;
+    }
+}

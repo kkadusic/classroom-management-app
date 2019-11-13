@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <title>Galen Reports</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="galen-report.css"></link>
+        <script src="vue.js"></script>
+        <script src="galen-report.js"></script>
+        <script>
+        var REPORT_DATA = {
+  "tests" : [ {
+    "name" : "pocetna.gspec",
+    "startedAt" : 1573657537926,
+    "endedAt" : 1573657548214,
+    "failed" : false,
+    "statistic" : {
+      "passed" : 12,
+      "errors" : 0,
+      "warnings" : 0,
+      "total" : 12
+    },
+    "testId" : "1-pocetna.gspec",
+    "duration" : 10288,
+    "failed" : false
+  } ]
+};
+        </script>
+
+    </head>
+    <body>
+        <div id="app">
+            <div class="overview-table-wrapper">
+                <div v-if="groups.length > 0">
+                    <h4>Groups</h4>
+                    <ul class="test-groups">
+                        <li>
+                            <span class="link" v-on:click="toggleAllGroups()">All</label>
+                        </li>
+                        <li v-for="(group, groupIndex) in groups">
+                            <span v-if="selectedGroup !== group.name" class="link" v-on:click="toggleGroup(group.name)">{{group.name}}</span>
+                            <span v-else>{{group.name}}</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <table class="overview-table">
+                    <thead>
+                        <tr>
+                            <th v-for="column in tableColumns" v-bind:class="{'sorted-column': sorting.columnField === column.field}">
+                                <span class="link" v-on:click="sortTable(column)">{{column.name}}</span>
+                                <span class="sorting-icon"
+                                    v-if="sorting.columnField === column.field"
+                                    v-bind:class="[sorting.order === 1 ? 'sorting-down' : 'sorting-up']"></span>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="test in tests" v-if="test.show">
+                            <td v-for="column in tableColumns" v-bind:class="['cell-' + column.field]">
+                                <div v-if="column.field === 'name'">
+                                    <a class="link" v-bind:href="test.testId + '.html'">{{test.name.value}}</a>
+                                </div>
+                                <div v-else>{{test[column.field].value}}</div>
+                            </td>
+                            <td>
+                                <table class="progress-bar">
+                                    <tbody>
+                                        <tr>
+                                            <td class="bar-passed"
+                                                v-bind:style="{width: test.progress.passed + '%'}"
+                                                v-bind:class="{hidden: test.progress.passed < 0.5}"></td>
+                                            <td class="bar-failed"
+                                                v-bind:style="{width: test.progress.failed + '%'}"
+                                                v-bind:class="{hidden: test.progress.failed < 0.5}"></td>
+                                            <td class="bar-warning"
+                                                v-bind:style="{width: test.progress.warning + '%'}"
+                                                v-bind:class="{hidden: test.progress.warning < 0.5}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script>renderTestOverviewReport(REPORT_DATA);</script>
+    </body>
+</html>

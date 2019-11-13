@@ -1,0 +1,41 @@
+
+
+@objects
+    meni      	  .meni
+    logo          .meni img
+	linkovi       #linkovi
+	listItem      ul li
+	sadrzaj       .sadrzaj
+	forma         form
+	labela		  label
+	inputPolje    input
+	
+= Meni =
+	meni:
+		contains linkovi
+		height > 20px
+		
+	logo:
+		above sadrzaj
+		centered horizontally inside sadrzaj 50px
+		height 20 to 100px
+		width 20 to 100px
+		
+	linkovi: 
+		below logo
+		
+	listItem:
+		css display is "inline"		
+		
+= Sadrzaj =
+
+	sadrzaj:
+		below meni
+		
+	forma:
+		inside sadrzaj
+		
+	labela:
+		width < 300px
+		aligned horizontally all inputPolje 10px
+		

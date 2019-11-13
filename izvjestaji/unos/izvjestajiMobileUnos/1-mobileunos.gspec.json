@@ -1,0 +1,291 @@
+{
+  "testId" : "1-mobileunos.gspec",
+  "name" : "mobileUnos.gspec",
+  "report" : {
+    "nodes" : [ {
+      "name" : "Simple check",
+      "status" : "info",
+      "nodes" : [ {
+        "name" : "check  mobileUnos.gspec --url http://localhost/html-css/unos.html --size 500x768 --htmlreport izvjestajiMobileUnos",
+        "status" : "info",
+        "nodes" : [ {
+          "name" : "Check layout: mobileUnos.gspec included tags: ",
+          "status" : "info",
+          "time" : 1573657812937,
+          "sections" : [ {
+            "name" : "Meni",
+            "place" : {
+              "filePath" : "mobileUnos.gspec",
+              "lineNumber" : 13
+            },
+            "objects" : [ {
+              "name" : "meni",
+              "specs" : [ {
+                "status" : "info",
+                "place" : {
+                  "filePath" : "mobileUnos.gspec",
+                  "lineNumber" : 15
+                },
+                "name" : "contains linkovi",
+                "highlight" : [ "meni", "linkovi" ]
+              }, {
+                "status" : "info",
+                "place" : {
+                  "filePath" : "mobileUnos.gspec",
+                  "lineNumber" : 16
+                },
+                "name" : "height > 20px",
+                "meta" : [ {
+                  "from" : {
+                    "object" : "meni",
+                    "edge" : "top"
+                  },
+                  "to" : {
+                    "object" : "meni",
+                    "edge" : "bottom"
+                  },
+                  "expectedDistance" : "> 20px",
+                  "realDistance" : "144px"
+                } ],
+                "highlight" : [ "meni" ]
+              } ]
+            }, {
+              "name" : "logo",
+              "specs" : [ {
+                "status" : "info",
+                "place" : {
+                  "filePath" : "mobileUnos.gspec",
+                  "lineNumber" : 19
+                },
+                "name" : "above sadrzaj",
+                "meta" : [ {
+                  "from" : {
+                    "object" : "logo",
+                    "edge" : "bottom"
+                  },
+                  "to" : {
+                    "object" : "sadrzaj",
+                    "edge" : "top"
+                  },
+                  "expectedDistance" : ">= 0px",
+                  "realDistance" : "129px"
+                } ],
+                "highlight" : [ "logo", "sadrzaj" ]
+              }, {
+                "status" : "info",
+                "place" : {
+                  "filePath" : "mobileUnos.gspec",
+                  "lineNumber" : 20
+                },
+                "name" : "centered horizontally inside sadrzaj 50px",
+                "highlight" : [ "logo", "sadrzaj" ]
+              }, {
+                "status" : "info",
+                "place" : {
+                  "filePath" : "mobileUnos.gspec",
+                  "lineNumber" : 21
+                },
+                "name" : "height 20 to 100px",
+                "meta" : [ {
+                  "from" : {
+                    "object" : "logo",
+                    "edge" : "top"
+                  },
+                  "to" : {
+                    "object" : "logo",
+                    "edge" : "bottom"
+                  },
+                  "expectedDistance" : "20 to 100px",
+                  "realDistance" : "50px"
+                } ],
+                "highlight" : [ "logo" ]
+              }, {
+                "status" : "info",
+                "place" : {
+                  "filePath" : "mobileUnos.gspec",
+                  "lineNumber" : 22
+                },
+                "name" : "width 20 to 100px",
+                "meta" : [ {
+                  "from" : {
+                    "object" : "logo",
+                    "edge" : "left"
+                  },
+                  "to" : {
+                    "object" : "logo",
+                    "edge" : "right"
+                  },
+                  "expectedDistance" : "20 to 100px",
+                  "realDistance" : "50px"
+                } ],
+                "highlight" : [ "logo" ]
+              } ]
+            }, {
+              "name" : "linkovi",
+              "specs" : [ {
+                "status" : "info",
+                "place" : {
+                  "filePath" : "mobileUnos.gspec",
+                  "lineNumber" : 25
+                },
+                "name" : "below logo",
+                "meta" : [ {
+                  "from" : {
+                    "object" : "linkovi",
+                    "edge" : "top"
+                  },
+                  "to" : {
+                    "object" : "logo",
+                    "edge" : "bottom"
+                  },
+                  "expectedDistance" : ">= 0px",
+                  "realDistance" : "17px"
+                } ],
+                "highlight" : [ "linkovi", "logo" ]
+              } ]
+            }, {
+              "name" : "listItem",
+              "specs" : [ {
+                "status" : "info",
+                "place" : {
+                  "filePath" : "mobileUnos.gspec",
+                  "lineNumber" : 28
+                },
+                "name" : "css display is \"block\"",
+                "highlight" : [ "listItem" ]
+              } ]
+            } ]
+          }, {
+            "name" : "Sadrzaj",
+            "place" : {
+              "filePath" : "mobileUnos.gspec",
+              "lineNumber" : 30
+            },
+            "objects" : [ {
+              "name" : "sadrzaj",
+              "specs" : [ {
+                "status" : "info",
+                "place" : {
+                  "filePath" : "mobileUnos.gspec",
+                  "lineNumber" : 33
+                },
+                "name" : "below meni",
+                "meta" : [ {
+                  "from" : {
+                    "object" : "sadrzaj",
+                    "edge" : "top"
+                  },
+                  "to" : {
+                    "object" : "meni",
+                    "edge" : "bottom"
+                  },
+                  "expectedDistance" : ">= 0px",
+                  "realDistance" : "10px"
+                } ],
+                "highlight" : [ "sadrzaj", "meni" ]
+              } ]
+            }, {
+              "name" : "forma",
+              "specs" : [ {
+                "status" : "info",
+                "place" : {
+                  "filePath" : "mobileUnos.gspec",
+                  "lineNumber" : 36
+                },
+                "name" : "inside sadrzaj",
+                "meta" : [ ],
+                "highlight" : [ "forma", "sadrzaj" ]
+              } ]
+            }, {
+              "name" : "labela",
+              "specs" : [ {
+                "status" : "info",
+                "place" : {
+                  "filePath" : "mobileUnos.gspec",
+                  "lineNumber" : 39
+                },
+                "name" : "width < 300px",
+                "meta" : [ {
+                  "from" : {
+                    "object" : "labela",
+                    "edge" : "left"
+                  },
+                  "to" : {
+                    "object" : "labela",
+                    "edge" : "right"
+                  },
+                  "expectedDistance" : "< 300px",
+                  "realDistance" : "150px"
+                } ],
+                "highlight" : [ "labela" ]
+              }, {
+                "status" : "info",
+                "place" : {
+                  "filePath" : "mobileUnos.gspec",
+                  "lineNumber" : 40
+                },
+                "name" : "aligned vertically all inputPolje 50px",
+                "highlight" : [ "labela", "inputPolje" ]
+              } ]
+            }, {
+              "name" : "inputPolje",
+              "specs" : [ {
+                "status" : "info",
+                "place" : {
+                  "filePath" : "mobileUnos.gspec",
+                  "lineNumber" : 43
+                },
+                "name" : "below labela",
+                "meta" : [ {
+                  "from" : {
+                    "object" : "inputPolje",
+                    "edge" : "top"
+                  },
+                  "to" : {
+                    "object" : "labela",
+                    "edge" : "bottom"
+                  },
+                  "expectedDistance" : ">= 0px",
+                  "realDistance" : "13px"
+                } ],
+                "highlight" : [ "inputPolje", "labela" ]
+              } ]
+            } ]
+          } ],
+          "objects" : {
+            "meni" : {
+              "area" : [ 58, 50, 355, 144 ]
+            },
+            "listItem" : {
+              "area" : [ 124, 92, 223, 18 ]
+            },
+            "linkovi" : {
+              "area" : [ 84, 92, 303, 90 ]
+            },
+            "logo" : {
+              "area" : [ 235, 25, 50, 50 ]
+            },
+            "forma" : {
+              "area" : [ 152, 288, 167, 319 ]
+            },
+            "labela" : {
+              "area" : [ 160, 293, 150, 20 ]
+            },
+            "sadrzaj" : {
+              "area" : [ 58, 204, 355, 602 ]
+            },
+            "inputPolje" : {
+              "area" : [ 152, 326, 196, 30 ]
+            }
+          },
+          "screenshot" : "layout-1-screenshot.png",
+          "type" : "layout"
+        } ],
+        "time" : 1573657810920,
+        "type" : "node"
+      } ],
+      "time" : 1573657804870,
+      "type" : "node"
+    } ]
+  }
+}

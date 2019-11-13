@@ -1,0 +1,48 @@
+
+
+@objects
+    meni      	  .meni
+    logo          .meni img
+	linkovi       #linkovi
+	listItem      ul li
+    sadrzaj       .sadrzaj
+	tabelaSala    .tabelaSala
+	headerSprat   .headerSprat
+	headerRedni   .headerRedni
+	slobodnaSala  .slobodnaSala
+	zauzetaSala   .zauzetaSala
+	sala   		  .sala
+	kancelarija	  .kancelarija
+	
+= Meni =
+	meni:
+		contains linkovi
+		height > 20px
+		
+    logo:
+        above sadrzaj
+		centered horizontally inside sadrzaj 50px
+		height 20 to 100px
+		width 20 to 100px
+		
+	linkovi: 
+		below logo
+		
+	listItem:
+		css display is "block"	
+		
+= Sadrzaj =
+
+	sadrzaj:
+		below meni
+		
+	tabelaSala:
+		inside sadrzaj
+		contains slobodnaSala, zauzetaSala, kancelarija
+		
+	headerRedni: 
+		absent
+		
+	headerSprat: 
+		absent
+		

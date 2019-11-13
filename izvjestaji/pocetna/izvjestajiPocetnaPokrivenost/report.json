@@ -1,0 +1,17 @@
+{
+  "tests" : [ {
+    "name" : "pocetna.gspec",
+    "startedAt" : 1573658358045,
+    "endedAt" : 1573658369683,
+    "failed" : false,
+    "statistic" : {
+      "passed" : 13,
+      "errors" : 0,
+      "warnings" : 0,
+      "total" : 13
+    },
+    "testId" : "1-pocetna.gspec",
+    "duration" : 11638,
+    "failed" : false
+  } ]
+}

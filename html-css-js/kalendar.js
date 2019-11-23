@@ -291,16 +291,10 @@ window.onload = function() {
 document.getElementById("forma").addEventListener("change", myFunction);
 
 function myFunction() {
-    //alert("Promjena na formi");
-    //Kalendar.ucitajPodatke(redovna, vanredna);
-    //Kalendar.obrisi("kalendarDatum");
-    //Kalendar.iscrtajKalendar(document.getElementById("kalendarDatum"), 3);
-    //Kalendar.iscrtajKalendar(document.getElementById("kalendarDatum"), trenutniMjesec);
     var odabranaSala = document.getElementById("sala").value;
     var pocetak = document.getElementById("pocetak").value;
     var kraj = document.getElementById("kraj").value;
     Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(), odabranaSala, pocetak, kraj);
-    Kalendar.obrisi("kalendarDatum");
 }
 
 

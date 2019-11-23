@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Mocha Tests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/mocha/mocha.css" />
+    <link rel="stylesheet" type="text/css" href="rezervacija.css">
+</head>
+
+<body>
+    <div id="ispis"></div>
+    <div id="mocha"></div>
+ 
+    <script src="https://unpkg.com/chai/chai.js"></script>
+    <script src="https://unpkg.com/mocha/mocha.js"></script>
+ 
+    <script class="mocha-init">
+        mocha.setup('bdd');
+        mocha.checkLeaks();
+    </script>
+    <script src="testRezervacija.js"></script>
+    <script src="kalendar.js"></script>
+    <script class="mocha-exec">
+        mocha.run();
+   </script>
+
+    <div class="meni">
+        <div id="linkovi">
+            <ul>
+                <li><a href="pocetna.html">Početna</a></li>
+                <li><a href="sale.html">Sale</a></li>
+                <li><a href="unos.html">Unos</a></li>
+                <li><a href="rezervacija.html" id="aktivniTab">Rezervacije</a></li>
+                <li><a href="#">Osobe</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="sadrzaj">
+        <form id="forma">
+            <label>Sala: </label>
+            <select id="sala">
+                <option value="0-01">0-01</option>
+                <option value="0-02">0-02</option>
+                <option value="0-03">0-03</option>
+                <option value="0-04">0-04</option>
+                <option value="0-05">0-05</option>
+                <option value="0-06">0-06</option>
+                <option value="0-07">0-07</option>
+                <option value="0-08">0-08</option>
+                <option value="0-09">0-09</option>
+                <option value="1-01">1-01</option>
+                <option value="1-02">1-02</option>
+                <option value="1-03">1-03</option>
+                <option value="1-04">1-04</option>
+                <option value="1-05">1-05</option>
+                <option value="1-06">1-06</option>
+                <option value="1-07">1-07</option>
+                <option value="1-08">1-08</option>
+                <option value="1-09">1-09</option>
+                <option value="A1">A1</option>
+                <option value="A2">A2</option>
+                <option value="A3">A3</option>
+                <option value="EE1">EE1</option>
+                <option value="EE2">EE2</option>
+            </select>
+            <label>Periodična rezervacija: </label>
+            <input id="periodicna" type="checkbox" disabled>
+            <label>Početak: </label>
+            <input id="pocetak" type="time">
+            <label>Kraj: </label>
+            <input id="kraj" type="time">
+        </form>
+
+        <div id="kalendar">
+            <div id="kalendarMjesec">
+                <h3></h3>
+            </div>
+            <div id="kalendarDani">
+                <div class="kalendarDan">PON</div>
+                <div class="kalendarDan">UTO</div>
+                <div class="kalendarDan">SRI</div>
+                <div class="kalendarDan">ČET</div>
+                <div class="kalendarDan">PET</div>
+                <div class="kalendarDan">SUB</div>
+                <div class="kalendarDan">NED</div>
+            </div>
+            <div id="kalendarDatum">
+
+            </div>
+        </div>
+
+        <div>
+            <button class="dugme" onclick="Kalendar.prethodni()" type="button">Prethodni</button>
+            <button class="dugme" onclick="Kalendar.sljedeci()" type="button">Sljedeći</button>
+        </div>
+
+    </div>
+
+    
+
+</body>
+
+</html>

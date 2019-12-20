@@ -23,96 +23,15 @@ let Kalendar = (function() {
     }
 
     function dajIndeksTrazenogDana(mjesec, dan) {
-        if (mjesec == 0) {
-            if (dan == 0) return 6;
-            if (dan == 1) return 0;
-            if (dan == 2) return 1;
-            if (dan == 3) return 2;
-            if (dan == 4) return 3;
-        }
-        if (mjesec == 1) {
-            if (dan == 0) return 3;
-            if (dan == 1) return 4;
-            if (dan == 2) return 5;
-            if (dan == 3) return 6;
-            if (dan == 4) return 0;
-        }
-        if (mjesec == 2) {
-            if (dan == 0) return 3;
-            if (dan == 1) return 4;
-            if (dan == 2) return 5;
-            if (dan == 3) return 6;
-            if (dan == 4) return 0;
-        }
-        if (mjesec == 3) {
-            if (dan == 0) return 0;
-            if (dan == 1) return 1;
-            if (dan == 2) return 2;
-            if (dan == 3) return 3;
-            if (dan == 4) return 4;
-        }
-        if (mjesec == 4) {
-            if (dan == 0) return 5;
-            if (dan == 1) return 6;
-            if (dan == 2) return 0;
-            if (dan == 3) return 1;
-            if (dan == 4) return 2;
-        }
-        if (mjesec == 5) {
-            if (dan == 0) return 2;
-            if (dan == 1) return 3;
-            if (dan == 2) return 4;
-            if (dan == 3) return 5;
-            if (dan == 4) return 6;
-        }
-        if (mjesec == 6) {
-            if (dan == 0) return 0;
-            if (dan == 1) return 1;
-            if (dan == 2) return 2;
-            if (dan == 3) return 3;
-            if (dan == 4) return 4;
-        }
-        if (mjesec == 7) {
-            if (dan == 0) return 4;
-            if (dan == 1) return 5;
-            if (dan == 2) return 6;
-            if (dan == 3) return 0;
-            if (dan == 4) return 1;
-        }
-        if (mjesec == 8) {
-            if (dan == 0) return 1;
-            if (dan == 1) return 2;
-            if (dan == 2) return 3;
-            if (dan == 3) return 4;
-            if (dan == 4) return 5;
-        }
-        if (mjesec == 9) {
-            if (dan == 0) return 6;
-            if (dan == 1) return 0;
-            if (dan == 2) return 1;
-            if (dan == 3) return 2;
-            if (dan == 4) return 3;
-        }
-        if (mjesec == 10) {
-            if (dan == 0) return 3;
-            if (dan == 1) return 4;
-            if (dan == 2) return 5;
-            if (dan == 3) return 6;
-            if (dan == 4) return 0;
-        }
-        if (mjesec == 11) {
-            if (dan == 0) return 1;
-            if (dan == 1) return 2;
-            if (dan == 2) return 3;
-            if (dan == 3) return 4;
-            if (dan == 4) return 5;
-        }
+        let prviDanMjeseca = ((new Date(godina, mjesec)).getDay() + 6) % 7;
+        if (dan >= prviDanMjeseca)
+            return dan - prviDanMjeseca;
+        else
+            return dan + 7 - prviDanMjeseca;
     }
 
 
-
     function obojiRedovnoZauzece(mjesec, dan) {
-        let brojDanaMjeseca = 32 - new Date(godina, mjesec, 32).getDate();
         let prviDanMjeseca = ((new Date(godina, mjesec)).getDay() + 6) % 7;
         var duzina = document.getElementsByClassName("kalendarBroj");
 
@@ -120,31 +39,39 @@ let Kalendar = (function() {
 
         for (var i = prviDanMjeseca + a; i < duzina.length; i += 7) {
             var x = document.getElementsByClassName("kalendarBroj")[i];
-            var y = x.children[1].className = "zauzeta";
+            x.children[1].className = "zauzeta";
         }
     }
 
     function obojiVanrednoZauzece(odabraniMjesec, danDatum) {
         let prviDanMjeseca = ((new Date(godina, odabraniMjesec)).getDay() + 6) % 7;
         var x = document.getElementsByClassName("kalendarBroj")[danDatum + prviDanMjeseca - 1];
-        var y = x.children[1].className = "zauzeta";
+        x.children[1].className = "zauzeta";
     }
 
     function obojiZauzecaImpl(kalendarRef, mjesec, sala, pocetak, kraj) {
         let semestar = "";
 
+        // Brisanje zauzetih datuma prije ucitavanja novih (refresh)
+        let prviDanMjeseca = ((new Date(godina, mjesec)).getDay() + 6) % 7;
+        let brojDanaMjeseca = 32 - new Date(godina, mjesec, 32).getDate();
+
+        for (var i = prviDanMjeseca; i < brojDanaMjeseca +  prviDanMjeseca; i++) {
+            var x = document.getElementsByClassName("kalendarBroj")[i];
+            x.children[1].className = "slobodna";
+        }
+
         if (kalendarRef != null && sala != null && pocetak != null && kraj != null &&
-            sala != "" && pocetak != "" && kraj != "") {
+            sala !== "" && pocetak !== "" && kraj !== "") {
 
             for (var i = 0; i < redovnaZauzeca.length; i++) {
-                if (redovnaZauzeca[i].naziv == sala) {
+                if (redovnaZauzeca[i].naziv === sala) {
                     semestar = redovnaZauzeca[i].semestar;
-                    if (((semestar == "zimski") && (mjesec == 0 || mjesec >= 9)) ||
-                        ((semestar == "ljetni") && (mjesec >= 1 && mjesec <= 5))) {
+                    if (((semestar === "zimski") && (mjesec === 0 || mjesec >= 9)) ||
+                        ((semestar === "ljetni") && (mjesec >= 1 && mjesec <= 5))) {
                         if ((pocetak <= redovnaZauzeca[i].kraj) &&
                             (redovnaZauzeca[i].pocetak <= kraj)) {
                             obojiRedovnoZauzece(mjesec, redovnaZauzeca[i].dan);
-
                         }
                     }
                 }
@@ -152,12 +79,12 @@ let Kalendar = (function() {
 
 
             for (var i = 0; i < vanrednaZauzeca.length; i++) {
-                if (vanrednaZauzeca[i].naziv == sala) {
+                if (vanrednaZauzeca[i].naziv === sala) {
                     if ((pocetak <= vanrednaZauzeca[i].kraj) &&
                         (vanrednaZauzeca[i].pocetak <= kraj)) {
                         var dan = Number(vanrednaZauzeca[i].datum.substring(0, 2));
                         var odabraniMjesec = Number(vanrednaZauzeca[i].datum.substring(3, 5));
-                        if (mjesec == odabraniMjesec - 1) {
+                        if (mjesec === odabraniMjesec - 1) {
                             obojiVanrednoZauzece(odabraniMjesec - 1, dan);
                         }
 
@@ -246,7 +173,6 @@ let Kalendar = (function() {
 
 
 
-
 // Podaci za ucitavanje
 var redovna = [{
         dan: 3,
@@ -281,6 +207,7 @@ var vanredna = [{
         predavac: "Ben"
     }
 ];
+
 
 window.onload = function() {
     let trenutniMjesec = new Date().getMonth();

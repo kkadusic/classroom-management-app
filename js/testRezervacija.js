@@ -117,11 +117,10 @@ describe('Kalendar', function() {
             ];
             Kalendar.ucitajPodatke(redovna, vanredna);
             Kalendar.iscrtajKalendar(document.getElementById("kalendarDatum"), 10);
-            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(), "A2", "12:00", "15:00");
+            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), 10, "A2", "12:00", "15:00");
             var x = document.getElementsByClassName("kalendarBroj")[30];
             var y = x.children[1].className;
             assert.equal(y, "zauzeta", "Očekivano je da se dan oboji bez obzira što postoje duple vrijednosti");
-
         });
 
 
@@ -146,7 +145,7 @@ describe('Kalendar', function() {
             Kalendar.ucitajPodatke(redovna, vanredna);
             document.getElementById("kalendarDatum").innerHTML = "";
             Kalendar.iscrtajKalendar(document.getElementById("kalendarDatum"), 10);
-            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(), "A2", "12:00", "15:00");
+            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), 10, "A2", "12:00", "15:00");
 
             let polja = document.getElementsByClassName("slobodna");
             assert.equal(polja.length, 30, "Očekivano je da se ne oboji zauzeće");
@@ -182,8 +181,8 @@ describe('Kalendar', function() {
             ];
             Kalendar.ucitajPodatke(redovna, vanredna);
             Kalendar.iscrtajKalendar(document.getElementById("kalendarDatum"), 10);
-            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(), "A2", "12:00", "15:00");
-            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(), "A2", "12:00", "15:00");
+            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), 10, "A2", "12:00", "15:00");
+            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), 10, "A2", "12:00", "15:00");
             var x = document.getElementsByClassName("kalendarBroj")[30];
             var y = x.children[1].className;
             assert.equal(y, "zauzeta", "Očekivano je da boja zauzeća ostane ista");
@@ -543,11 +542,11 @@ describe('Kalendar', function() {
             ];
             Kalendar.ucitajPodatke(redovna, vanredna);
             Kalendar.iscrtajKalendar(document.getElementById("kalendarDatum"), 10);
-            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(), "A2", "12:00", "15:00");
-            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(), "A2", "12:00", "15:00");
-            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(), "A2", "12:00", "15:00");
-            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(), "A2", "12:00", "15:00");
-            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(), "A2", "12:00", "15:00");
+            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), 10, "A2", "12:00", "15:00");
+            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), 10, "A2", "12:00", "15:00");
+            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), 10, "A2", "12:00", "15:00");
+            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), 10, "A2", "12:00", "15:00");
+            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), 10, "A2", "12:00", "15:00");
             var x = document.getElementsByClassName("kalendarBroj")[30];
             var y = x.children[1].className;
             assert.equal(y, "zauzeta", "Očekivano je da boja zauzeća ostane ista");
@@ -600,7 +599,7 @@ describe('Kalendar', function() {
             ];
             Kalendar.ucitajPodatke(redovna, vanredna);
             Kalendar.iscrtajKalendar(document.getElementById("kalendarDatum"), 10);
-            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(), "A2", "12:00", "15:00");
+            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), 10, "A2", "12:00", "15:00");
             var x = document.getElementsByClassName("kalendarBroj")[30];
             var y = x.children[1].className;
             assert.equal(y, "zauzeta", "Očekivano je da se dan oboji bez obzira što postoje duple vrijednosti");

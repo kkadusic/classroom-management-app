@@ -18,7 +18,6 @@ input {
 }
 
 input[type=submit] {
-    background-color: lightgray;
     height: 30px;
     width: 160px;
     color: white;
@@ -41,6 +40,6 @@ label {
     text-align: left;
     font-size: 17px;
     margin-bottom: 20px;
-    font-family: Arial;
+    font-family: Arial, serif;
     margin-top: 5px;
 }

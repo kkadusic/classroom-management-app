@@ -3,7 +3,7 @@ let Kalendar = (function() {
     let danas = new Date();
     let mjesec = danas.getMonth();
     let godina = danas.getFullYear();
-    let sviMjeseci = ["Januar", "Februar", "Mart", "April", "Maj", "Juni", "Juli", "August", "Septembar", "Oktobar", "Novembar", "Decembar"];
+    const sviMjeseci = ["Januar", "Februar", "Mart", "April", "Maj", "Juni", "Juli", "August", "Septembar", "Oktobar", "Novembar", "Decembar"];
 
     var redovnaZauzeca;
     var vanrednaZauzeca;
@@ -69,8 +69,8 @@ let Kalendar = (function() {
                     semestar = redovnaZauzeca[i].semestar;
                     if (((semestar === "zimski") && (mjesec === 0 || mjesec >= 9)) ||
                         ((semestar === "ljetni") && (mjesec >= 1 && mjesec <= 5))) {
-                        if ((pocetak <= redovnaZauzeca[i].kraj) &&
-                            (redovnaZauzeca[i].pocetak <= kraj)) {
+                        if ((pocetak < redovnaZauzeca[i].kraj) &&
+                            (redovnaZauzeca[i].pocetak < kraj)) {
                             obojiRedovnoZauzece(mjesec, redovnaZauzeca[i].dan);
                         }
                     }
@@ -80,8 +80,8 @@ let Kalendar = (function() {
 
             for (var i = 0; i < vanrednaZauzeca.length; i++) {
                 if (vanrednaZauzeca[i].naziv === sala) {
-                    if ((pocetak <= vanrednaZauzeca[i].kraj) &&
-                        (vanrednaZauzeca[i].pocetak <= kraj)) {
+                    if ((pocetak < vanrednaZauzeca[i].kraj) &&
+                        (vanrednaZauzeca[i].pocetak < kraj)) {
                         var dan = Number(vanrednaZauzeca[i].datum.substring(0, 2));
                         var odabraniMjesec = Number(vanrednaZauzeca[i].datum.substring(3, 5));
                         if (mjesec === odabraniMjesec - 1) {
@@ -100,6 +100,10 @@ let Kalendar = (function() {
         document.getElementById(elementID).innerHTML = "";
     }
 
+    function namjestiDugme(dugme, disable) {
+        if (!dugme) return;
+        dugme.disabled = !!disable;
+    }
 
     function prethodniImpl() {
         if (godina === 2019 && mjesec > 0) {
@@ -109,11 +113,11 @@ let Kalendar = (function() {
             iscrtajKalendarImpl(document.getElementById("kalendarDatum"), mjesec);
             if (document.getElementById("sala").value != null &&
                 document.getElementById("pocetak").value != null &&
-                document.getElementById("kraj").value) {
+                document.getElementById("kraj").value != null) {
                 Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(),
                     document.getElementById("sala").value, document.getElementById("pocetak").value, document.getElementById("kraj").value);
             }
-        } else alert("Prikaz prethodne godine je onemogucen");
+        }
     }
 
     function sljedeciImpl() {
@@ -124,11 +128,11 @@ let Kalendar = (function() {
             iscrtajKalendarImpl(document.getElementById("kalendarDatum"), mjesec);
             if (document.getElementById("sala").value != null &&
                 document.getElementById("pocetak").value != null &&
-                document.getElementById("kraj").value) {
+                document.getElementById("kraj").value != null) {
                 Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(),
                     document.getElementById("sala").value, document.getElementById("pocetak").value, document.getElementById("kraj").value);
             }
-        } else alert("Prikaz sljedece godine je onemogucen");
+        }
     }
 
 
@@ -136,26 +140,35 @@ let Kalendar = (function() {
         let prviDanMjeseca = ((new Date(godina, mjesec)).getDay() + 6) % 7;
         let brojDanaMjeseca = 32 - new Date(godina, mjesec, 32).getDate();
 
+        if (mjesec === 0)
+            namjestiDugme(document.getElementById("prethodniBtn"), true);
+        else
+            namjestiDugme(document.getElementById("prethodniBtn"), false);
+
+        if (mjesec === 11)
+            namjestiDugme(document.getElementById("sljedeciBtn"), true);
+        else
+            namjestiDugme(document.getElementById("sljedeciBtn"), false);
+
+
+
         // Postavljanje naziva za mjesec
         obrisi('kalendarMjesec');
         var el = document.createElement('div');
-        var domString = '<h3>' + sviMjeseci[mjesec] + '</h3>';
-        el.innerHTML = domString;
+        el.innerHTML = '<h3>' + sviMjeseci[mjesec] + '</h3>';
         document.getElementById("kalendarMjesec").appendChild(el.firstChild);
 
         // Dodavanje dana iz proslog mjeseca
         for (var i = 0; i < prviDanMjeseca; i++) {
             var el = document.createElement('div');
-            var domString = '<div class="kalendarBroj danBezPrikaza"></div>';
-            el.innerHTML = domString;
+            el.innerHTML = '<div class="kalendarBroj danBezPrikaza"></div>';
             kalendarRef.appendChild(el.firstChild);
         }
 
         // Dodavanje dana iz aktuelnog mjeseca
         for (var i = 1; i <= brojDanaMjeseca; i++) {
             var el = document.createElement('div');
-            var domString = '<div class="kalendarBroj"> <div class="danBroj">' + i + '</div> <div class="slobodna"></div> </div>';
-            el.innerHTML = domString;
+            el.innerHTML = '<div class="kalendarBroj"> <div class="danBroj">' + i + '</div> <div class="slobodna"></div> </div>';
             kalendarRef.appendChild(el.firstChild);
         }
     }
@@ -174,39 +187,11 @@ let Kalendar = (function() {
 
 
 // Podaci za ucitavanje
-var redovna = [{
-        dan: 3,
-        semestar: "zimski",
-        pocetak: "12:00",
-        kraj: "15:00",
-        naziv: "A3",
-        predavac: "John"
-    },
-    {
-        dan: 1,
-        semestar: "zimski",
-        pocetak: "12:00",
-        kraj: "15:00",
-        naziv: "A3",
-        predavac: "John"
-    }
-];
+let redovna = [{dan: 3, semestar: "zimski", pocetak: "12:00", kraj: "15:00", naziv: "A3", predavac: "John"},
+               {dan: 1, semestar: "zimski", pocetak: "12:00", kraj: "15:00", naziv: "A3", predavac: "John"}];
 
-var vanredna = [{
-        datum: "15.11.2019",
-        pocetak: "12:00",
-        kraj: "15:00",
-        naziv: "A2",
-        predavac: "Taylor"
-    },
-    {
-        datum: "27.11.2019",
-        pocetak: "15:00",
-        kraj: "18:00",
-        naziv: "1-08",
-        predavac: "Ben"
-    }
-];
+let vanredna = [{datum: "15.11.2019", pocetak: "12:00", kraj: "15:00", naziv: "A2", predavac: "Taylor"},
+                {datum: "27.11.2019", pocetak: "15:00", kraj: "18:00", naziv: "1-08", predavac: "Ben"}];
 
 
 window.onload = function() {
@@ -215,13 +200,13 @@ window.onload = function() {
     Kalendar.iscrtajKalendar(document.getElementById("kalendarDatum"), trenutniMjesec);
 };
 
-document.getElementById("forma").addEventListener("change", myFunction);
+document.getElementById("forma").addEventListener("change", unosNaFormi);
 
-function myFunction() {
-    var odabranaSala = document.getElementById("sala").value;
-    var pocetak = document.getElementById("pocetak").value;
-    var kraj = document.getElementById("kraj").value;
-    Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(), odabranaSala, pocetak, kraj);
+function unosNaFormi() {
+    let sala = document.getElementById("sala").value;
+    let pocetak = document.getElementById("pocetak").value;
+    let kraj = document.getElementById("kraj").value;
+    Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(), sala, pocetak, kraj);
 }
 
 

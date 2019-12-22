@@ -5,8 +5,8 @@ let Kalendar = (function() {
     let godina = danas.getFullYear();
     const sviMjeseci = ["Januar", "Februar", "Mart", "April", "Maj", "Juni", "Juli", "August", "Septembar", "Oktobar", "Novembar", "Decembar"];
 
-    var redovnaZauzeca;
-    var vanrednaZauzeca;
+    var redovnaZauzeca = [];
+    var vanrednaZauzeca = [];
 
     function dajMjesecImpl() {
         return mjesec;
@@ -87,7 +87,6 @@ let Kalendar = (function() {
                         if (mjesec === odabraniMjesec - 1) {
                             obojiVanrednoZauzece(odabraniMjesec - 1, dan);
                         }
-
                     }
                 }
             }
@@ -114,7 +113,7 @@ let Kalendar = (function() {
             if (document.getElementById("sala").value != null &&
                 document.getElementById("pocetak").value != null &&
                 document.getElementById("kraj").value != null) {
-                Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(),
+                Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), mjesec,
                     document.getElementById("sala").value, document.getElementById("pocetak").value, document.getElementById("kraj").value);
             }
         }
@@ -129,7 +128,7 @@ let Kalendar = (function() {
             if (document.getElementById("sala").value != null &&
                 document.getElementById("pocetak").value != null &&
                 document.getElementById("kraj").value != null) {
-                Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(),
+                Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), mjesec,
                     document.getElementById("sala").value, document.getElementById("pocetak").value, document.getElementById("kraj").value);
             }
         }
@@ -149,7 +148,6 @@ let Kalendar = (function() {
             namjestiDugme(document.getElementById("sljedeciBtn"), true);
         else
             namjestiDugme(document.getElementById("sljedeciBtn"), false);
-
 
 
         // Postavljanje naziva za mjesec

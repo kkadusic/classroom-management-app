@@ -603,10 +603,7 @@ describe('Kalendar', function() {
             var x = document.getElementsByClassName("kalendarBroj")[30];
             var y = x.children[1].className;
             assert.equal(y, "zauzeta", "Očekivano je da se dan oboji bez obzira što postoje duple vrijednosti");
-
         });
-
-
 
     });
 

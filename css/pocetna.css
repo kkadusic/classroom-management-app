@@ -1,5 +1,5 @@
 .sadrzaj {
-    background-color: #71A0CC;
+    background-image: url("../slike/pozadina.png");
     margin-top: 10px;
     border: 1px solid limegreen;
     display: flex;

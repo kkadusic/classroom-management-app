@@ -1,7 +1,7 @@
 .sadrzaj {
-    background-color: #71A0CC;
+    background-image: url("../slike/pozadina.png");
     text-align: center;
-    padding: 100px;
+    padding: 120px;
     margin-top: 10px;
     border: 1px solid limegreen;
 }
@@ -71,17 +71,17 @@ table tr:nth-child(2) td:nth-child(1) {
 }
 
 table tr:first-child td:first-child {
-    background-color: #71A0CC;
-    border-left: solid 1px #71A0CC;
-    border-top: solid 1px #71A0CC;
+    background: none;
+    border-left: solid transparent;
+    border-top: solid transparent;
 }
 
 .slobodnaSala {
-    background-color: #02FE4F;
+    background-color: #96e6a1;
 }
 
 .zauzetaSala {
-    background-color: #FF614E;
+    background-color: #ff9a9e;
 }
 
 .kancelarija {

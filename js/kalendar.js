@@ -180,23 +180,8 @@ let Kalendar = (function() {
         dajMjesec: dajMjesecImpl,
         ocistiPodatke: ocistiPodatkeImpl
     }
+
 }());
-
-
-
-// Podaci za ucitavanje
-let redovna = [{dan: 3, semestar: "zimski", pocetak: "12:00", kraj: "15:00", naziv: "A3", predavac: "John"},
-               {dan: 1, semestar: "zimski", pocetak: "12:00", kraj: "15:00", naziv: "A3", predavac: "John"}];
-
-let vanredna = [{datum: "15.11.2019", pocetak: "12:00", kraj: "15:00", naziv: "A2", predavac: "Taylor"},
-                {datum: "27.11.2019", pocetak: "15:00", kraj: "18:00", naziv: "1-08", predavac: "Ben"}];
-
-
-window.onload = function() {
-    let trenutniMjesec = new Date().getMonth();
-    Kalendar.ucitajPodatke(redovna, vanredna);
-    Kalendar.iscrtajKalendar(document.getElementById("kalendarDatum"), trenutniMjesec);
-};
 
 document.getElementById("forma").addEventListener("change", unosNaFormi);
 
@@ -206,7 +191,3 @@ function unosNaFormi() {
     let kraj = document.getElementById("kraj").value;
     Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(), sala, pocetak, kraj);
 }
-
-
-//primjer korištenja modula
-//Kalendar.obojiZauzeca(document.getElementById("kalendar"),1,"A3","12:00","13:30");

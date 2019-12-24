@@ -1,0 +1,36 @@
+{
+  "periodicna": [
+    {
+      "dan": 3,
+      "semestar": "zimski",
+      "pocetak": "12:00",
+      "kraj": "15:00",
+      "naziv": "A3",
+      "predavac": "John"
+    },
+    {
+      "dan": 1,
+      "semestar": "zimski",
+      "pocetak": "12:00",
+      "kraj": "15:00",
+      "naziv": "A3",
+      "predavac": "John"
+    }
+  ],
+  "vanredna": [
+    {
+      "datum": "15.11.2019",
+      "pocetak": "12:00",
+      "kraj": "15:00",
+      "naziv": "A2",
+      "predavac": "Taylor"
+    },
+    {
+      "datum": "27.11.2019",
+      "pocetak": "15:00",
+      "kraj": "18:00",
+      "naziv": "1-08",
+      "predavac": "Ben"
+    }
+  ]
+}

@@ -24,8 +24,50 @@ let Pozivi = (function(){
         xhttp.send();
     }
 
+    function dodajNovoZauzeceImpl(){
+        $.ajax({
+            url: "/rezervacija.html",
+            type: "POST",
+            data: {
+                datum: "15.11.2019",
+                pocetak: "12:00",
+                kraj: "15:00",
+                naziv: "A2",
+                predavac: "Taylor"
+            },
+            success: function (data, status, settings) {
+
+            },
+            error: function (ajaxrequest, ajaxOptions, thrownError) {
+
+            }
+        });
+    }
+
+    function dodajVanrednoZauzeceImpl(datum, pocetak, kraj, naziv, predavac){
+        $.ajax({
+            url: "/rezervacija.html",
+            type: "POST",
+            data: {
+                datum: datum,
+                pocetak: pocetak,
+                kraj: kraj,
+                naziv: naziv,
+                predavac: predavac
+            },
+            success: function (data, status, settings) {
+
+            },
+            error: function (ajaxrequest, ajaxOptions, thrownError) {
+
+            }
+        });
+    }
+
     return {
-        ucitajJsonZauzeca: ucitajJsonZauzecaImpl
+        ucitajJsonZauzeca: ucitajJsonZauzecaImpl,
+        dodajNovoZauzece: dodajNovoZauzeceImpl,
+        dodajVanrednoZauzece: dodajVanrednoZauzeceImpl
     }
 
 }());

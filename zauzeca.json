@@ -1,7 +1,7 @@
 {
   "periodicna": [
     {
-      "dan": 3,
+      "dan": 1,
       "semestar": "zimski",
       "pocetak": "12:00",
       "kraj": "15:00",
@@ -9,7 +9,7 @@
       "predavac": "John"
     },
     {
-      "dan": 1,
+      "dan": 3,
       "semestar": "zimski",
       "pocetak": "12:00",
       "kraj": "15:00",

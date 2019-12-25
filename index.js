@@ -1,5 +1,5 @@
 const express = require('express');
-//const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const fs = require('fs');
 const app = express();
 const path = require('path');
@@ -10,12 +10,11 @@ app.use('/css', express.static(path.join(__dirname + '/css')));
 app.use('/slike', express.static(path.join(__dirname + '/slike')));
 app.use('/js', express.static(path.join(__dirname + '/js')));
 
-/*
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
- */
+
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/html/pocetna.html'));
@@ -45,6 +44,15 @@ app.get('/zauzeca.json', (req, res) => {
         }
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end(podaci);
+    });
+});
+
+app.post('/rezervacija.html', function (req, res) {
+    let tijelo = req.body;
+    fs.appendFile('zauzeca.json', JSON.stringify(tijelo), function (err) {
+        if (err) throw err;
+        console.log('Sacuvano');
+        res.sendFile(path.join(__dirname, '/html/rezervacija.html'));
     });
 });
 

@@ -12,6 +12,10 @@ let Kalendar = (function() {
         return mjesec;
     }
 
+    function dajGodinuImpl(){
+        return godina;
+    }
+
     function ocistiPodatkeImpl() {
         redovnaZauzeca = [];
         vanrednaZauzeca = [];
@@ -59,9 +63,7 @@ let Kalendar = (function() {
             x.children[1].className = "slobodna";
         }
 
-        if (kalendarRef != null && sala != null && pocetak != null && kraj != null &&
-            sala !== "" && pocetak !== "" && kraj !== "") {
-
+        if (kalendarRef != null && sala !== "" && pocetak !== "" && kraj !== "") {
             if (periodicna === true) {
                 for (var i = 0; i < redovnaZauzeca.length; i++) {
                     if (redovnaZauzeca[i].naziv === sala) {
@@ -102,34 +104,30 @@ let Kalendar = (function() {
     }
 
     function prethodniImpl() {
-        if (godina === 2019 && mjesec > 0) {
-            obrisi('kalendarDatum');
-            godina = (mjesec === 0) ? godina - 1 : godina;
-            mjesec = (mjesec === 0) ? 11 : mjesec - 1;
-            iscrtajKalendarImpl(document.getElementById("kalendarDatum"), mjesec);
-            if (document.getElementById("sala").value != null &&
-                document.getElementById("pocetak").value != null &&
-                document.getElementById("kraj").value != null) {
-                Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), mjesec,
-                    document.getElementById("sala").value, document.getElementById("periodicna").checked.valueOf(),
-                    document.getElementById("pocetak").value, document.getElementById("kraj").value);
-            }
+        obrisi('kalendarDatum');
+        godina = (mjesec === 0) ? godina - 1 : godina;
+        mjesec = (mjesec === 0) ? 11 : mjesec - 1;
+        iscrtajKalendarImpl(document.getElementById("kalendarDatum"), mjesec);
+        if (document.getElementById("sala").value != null &&
+            document.getElementById("pocetak").value != null &&
+            document.getElementById("kraj").value != null) {
+            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), mjesec,
+                document.getElementById("sala").value, document.getElementById("periodicna").checked.valueOf(),
+                document.getElementById("pocetak").value, document.getElementById("kraj").value);
         }
     }
 
     function sljedeciImpl() {
-        if (godina === 2019 && mjesec < 11) {
-            obrisi('kalendarDatum');
-            godina = (mjesec === 11) ? godina + 1 : godina;
-            mjesec = (mjesec + 1) % 12;
-            iscrtajKalendarImpl(document.getElementById("kalendarDatum"), mjesec);
-            if (document.getElementById("sala").value != null &&
-                document.getElementById("pocetak").value != null &&
-                document.getElementById("kraj").value != null) {
-                Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), mjesec,
-                    document.getElementById("sala").value, document.getElementById("periodicna").checked.valueOf(),
-                    document.getElementById("pocetak").value, document.getElementById("kraj").value);
-            }
+        obrisi('kalendarDatum');
+        godina = (mjesec === 11) ? godina + 1 : godina;
+        mjesec = (mjesec + 1) % 12;
+        iscrtajKalendarImpl(document.getElementById("kalendarDatum"), mjesec);
+        if (document.getElementById("sala").value != null &&
+            document.getElementById("pocetak").value != null &&
+            document.getElementById("kraj").value != null) {
+            Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), mjesec,
+                document.getElementById("sala").value, document.getElementById("periodicna").checked.valueOf(),
+                document.getElementById("pocetak").value, document.getElementById("kraj").value);
         }
     }
 
@@ -165,7 +163,7 @@ let Kalendar = (function() {
         // Dodavanje dana iz aktuelnog mjeseca
         for (var i = 1; i <= brojDanaMjeseca; i++) {
             var el = document.createElement('div');
-            el.innerHTML = '<div class="kalendarBroj" onclick="odabirDana(this)" style="cursor: pointer;"> ' +
+            el.innerHTML = '<div class="kalendarBroj" onclick="rezervisi(this)" style="cursor: pointer;"> ' +
                 '<div class="danBroj">' + i + '</div> <div class="slobodna"></div> </div>';
             kalendarRef.appendChild(el.firstChild);
         }
@@ -178,6 +176,7 @@ let Kalendar = (function() {
         prethodni: prethodniImpl,
         sljedeci: sljedeciImpl,
         dajMjesec: dajMjesecImpl,
+        dajGodinu: dajGodinuImpl,
         ocistiPodatke: ocistiPodatkeImpl
     }
 

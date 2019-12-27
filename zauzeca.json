@@ -15,6 +15,22 @@
       "kraj": "15:00",
       "naziv": "A3",
       "predavac": "John"
+    },
+    {
+      "dan": 0,
+      "semestar": "zimski",
+      "pocetak": "09:09",
+      "kraj": "19:00",
+      "naziv": "A2",
+      "predavac": ""
+    },
+    {
+      "dan": 2,
+      "semestar": "ljetni",
+      "pocetak": "09:19",
+      "kraj": "19:05",
+      "naziv": "0-01",
+      "predavac": ""
     }
   ],
   "vanredna": [
@@ -31,6 +47,13 @@
       "kraj": "18:00",
       "naziv": "1-08",
       "predavac": "Ben"
+    },
+    {
+      "datum": "06.12.2019",
+      "pocetak": "09:00",
+      "kraj": "19:00",
+      "naziv": "0-01",
+      "predavac": ""
     }
   ]
 }

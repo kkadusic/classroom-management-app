@@ -5,7 +5,6 @@ const app = express();
 const path = require('path');
 
 
-// Staticni, pristupa se kroz web server
 app.use('/css', express.static(path.join(__dirname + '/css')));
 app.use('/slike', express.static(path.join(__dirname + '/slike')));
 app.use('/js', express.static(path.join(__dirname + '/js')));
@@ -48,15 +47,24 @@ app.get('/zauzeca.json', (req, res) => {
 });
 
 app.post('/rezervacija.html', function (req, res) {
-    let tijelo = req.body;
-    fs.appendFile('zauzeca.json', JSON.stringify(tijelo), function (err) {
+    let novoZauzece = req.body;
+    fs.readFile('zauzeca.json', 'utf-8', function(err, data) {
         if (err) throw err;
-        console.log('Sacuvano');
-        res.sendFile(path.join(__dirname, '/html/rezervacija.html'));
-    });
+        var zauzecaJson = JSON.parse(data);
+        if (Object.keys(novoZauzece).length === 6)
+            zauzecaJson.periodicna.push(novoZauzece);
+        else
+            zauzecaJson.vanredna.push(novoZauzece);
+
+        fs.writeFile('zauzeca.json', JSON.stringify(zauzecaJson), 'utf-8', function(err) {
+            if (err) throw err;
+            console.log('Upisano novo zauzece!');
+        });
+        res.send("Uspjesno upisano");
+        // todo - moguce je rezervisati periodicno van semestra - ISPRAVITI!
+    })
+
 });
 
-app.listen(8080, () => {
-
-});
+app.listen(8080);
 

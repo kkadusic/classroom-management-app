@@ -80,15 +80,23 @@ let Pozivi = (function(){
                 if (setSlika !== 4) {
                     $(document).ready(function () {
                         $(".slike").empty();
-                        $(".slike").append('<img src="' + podaci.slika1 + '" alt="slika"">');
-                        $(".slike").append('<img src="' + podaci.slika2 + '" alt="slika"">');
-                        $(".slike").append('<img src="' + podaci.slika3 + '" alt="slika"">');
+                        var prvaSlikaBroj = podaci.slika1.toString().replace(/\D/g,'') + ".jpg";
+                        var drugaSlikaBroj = podaci.slika2.toString().replace(/\D/g,'') + ".jpg";
+                        var trecaSlikaBroj = podaci.slika3.toString().replace(/\D/g,'') + ".jpg";
+                        $(".slike").append('<a href="http://localhost:8080/slika' + prvaSlikaBroj + '"> <img src="'
+                            + podaci.slika1 + '" alt="slika""></a>');
+                        $(".slike").append('<a href="http://localhost:8080/slika' + drugaSlikaBroj + '"> <img src="'
+                            + podaci.slika2 + '" alt="slika""></a>');
+                        $(".slike").append('<a href="http://localhost:8080/slika' + trecaSlikaBroj + '"> <img src="'
+                            + podaci.slika3 + '" alt="slika""></a>');
                     });
                 }
                 else {
                     $(document).ready(function () {
                         $(".slike").empty();
-                        $(".slike").append('<img src="' + podaci.slika1 + '" alt="slika"">');
+                        var prvaSlikaBroj = podaci.slika1.toString().replace(/\D/g,'') + ".jpg";
+                        $(".slike").append('<a href="http://localhost:8080/slika' + prvaSlikaBroj + '"> <img src="'
+                            + podaci.slika1 + '" alt="slika""></a>');
                     });
                 }
             }

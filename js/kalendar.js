@@ -69,7 +69,6 @@ let Kalendar = (function() {
         }
 
         //let godinaNaKalendaru = document.getElementById("kalendarMjesec").textContent.split(' ')[1];
-        // TODO DA CHECKBOX NEMA ULOGU KAD SE BOJE ZAUZECA?
         if (kalendarRef != null && sala !== "" && pocetak !== "" && kraj !== "") {
             if (periodicna === true) {
                 for (var i = 0; i < redovnaZauzeca.length; i++) {

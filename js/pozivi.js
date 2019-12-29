@@ -103,10 +103,10 @@ let Pozivi = (function(){
                 }
             }
         };
-
-        ajax.open("GET", "slike" + setSlikaIndeks, true);
-        ajax.send();
-
+        if (dosaoDoKraja === false) {
+            ajax.open("GET", "slike" + setSlikaIndeks, true);
+            ajax.send();
+        }
     }
 
     return {

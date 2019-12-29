@@ -72,37 +72,41 @@ let Pozivi = (function(){
         ajax.send(JSON.stringify(vanredno));
     }
 
-    function ucitajSlikeImpl(setSlika) {
+    function ucitajSlikeImpl(setSlikaIndeks) {
+        if (dosaoDoKraja === true) return 0;
         let ajax = new XMLHttpRequest();
         ajax.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
+
                 let podaci = JSON.parse(ajax.responseText);
-                if (setSlika !== 4) {
+                ucitaneSlike.push(podaci);
+
+                if (setSlikaIndeks !== 4) {
                     $(document).ready(function () {
+                        // var prvaSlikaBroj = podaci.slika1.toString().replace(/\D/g,'') + ".jpg";
+                        // var drugaSlikaBroj = podaci.slika2.toString().replace(/\D/g,'') + ".jpg";
+                        // var trecaSlikaBroj = podaci.slika3.toString().replace(/\D/g,'') + ".jpg";
+                        // $(".slike").append('<a href="http://localhost:8080/slika' + prvaSlikaBroj + '"> <img src="'
+                        // + podaci.slika1 + '" alt="slika""></a>');
                         $(".slike").empty();
-                        var prvaSlikaBroj = podaci.slika1.toString().replace(/\D/g,'') + ".jpg";
-                        var drugaSlikaBroj = podaci.slika2.toString().replace(/\D/g,'') + ".jpg";
-                        var trecaSlikaBroj = podaci.slika3.toString().replace(/\D/g,'') + ".jpg";
-                        $(".slike").append('<a href="http://localhost:8080/slika' + prvaSlikaBroj + '"> <img src="'
-                            + podaci.slika1 + '" alt="slika""></a>');
-                        $(".slike").append('<a href="http://localhost:8080/slika' + drugaSlikaBroj + '"> <img src="'
-                            + podaci.slika2 + '" alt="slika""></a>');
-                        $(".slike").append('<a href="http://localhost:8080/slika' + trecaSlikaBroj + '"> <img src="'
-                            + podaci.slika3 + '" alt="slika""></a>');
+                        $(".slike").append('<img src="' + podaci.slika1 + '" alt="slika""></a>');
+                        $(".slike").append('<img src="' + podaci.slika2 + '" alt="slika""></a>');
+                        $(".slike").append('<img src="' + podaci.slika3 + '" alt="slika""></a>');
                     });
                 }
                 else {
                     $(document).ready(function () {
+                        // var prvaSlikaBroj = podaci.slika1.toString().replace(/\D/g,'') + ".jpg";
                         $(".slike").empty();
-                        var prvaSlikaBroj = podaci.slika1.toString().replace(/\D/g,'') + ".jpg";
-                        $(".slike").append('<a href="http://localhost:8080/slika' + prvaSlikaBroj + '"> <img src="'
-                            + podaci.slika1 + '" alt="slika""></a>');
+                        $(".slike").append('<img src="' + podaci.slika1 + '" alt="slika""></a>');
                     });
                 }
             }
         };
-        ajax.open("GET", "slike" + setSlika, true);
+
+        ajax.open("GET", "slike" + setSlikaIndeks, true);
         ajax.send();
+
     }
 
     return {

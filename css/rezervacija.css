@@ -48,6 +48,10 @@ label {
     font-size: 14px;
 }
 
+input[type=checkbox] {
+    transform: scale(1.5);
+}
+
 .slobodna {
     background-color: #02FE51;
     border: 2px solid #416B9D;

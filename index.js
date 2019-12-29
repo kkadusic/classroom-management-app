@@ -139,32 +139,6 @@ app.post('/rezervacija.html', function (req, res) {
 });
 
 
-/*
-app.get('/slika1', (req, res) => {
-    res.writeHead(200, {"Content-Type": "image/jpg"});
-    console.log(req.body);
-    console.log(req.textContent);
-    var count = 0;
-    var handler = function(error, content){
-        count++;
-        if (error){
-            console.log(error);
-        }
-        else{
-            res.write(content);
-        }
-
-        if (count === 3) {
-            res.end();
-        }
-    };
-
-    fs.readFile('slike/sala5.jpg', handler);
-    fs.readFile('slike/sala6.jpg', handler);
-    fs.readFile('slike/sala7.jpg', handler);
-});
- */
-
 app.get('/slika1.jpg', (req, res) => {
     fs.readFile('slike/sala1.jpg', (err, podaci) => {
         if (err) {
@@ -299,6 +273,5 @@ app.get('/slike4', (req, res) => {
     res.write(JSON.stringify(putanje));
     res.send();
 });
-
 
 app.listen(8080);

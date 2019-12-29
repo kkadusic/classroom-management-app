@@ -5,6 +5,7 @@ let Kalendar = (function() {
     let godina = danas.getFullYear();
 
     // Samo u ovoj godini se boje zauzeca
+    // Koristi se kad ne bi bilo onemogucavanje buttona
     let akademskaGodina = godina.toString();
 
     const sviMjeseci = ["Januar", "Februar", "Mart", "April", "Maj", "Juni", "Juli", "August", "Septembar", "Oktobar", "Novembar", "Decembar"];
@@ -67,11 +68,9 @@ let Kalendar = (function() {
             x.children[1].className = "slobodna";
         }
 
-        // todo onda nema potrebe za ovim?
-        let godinaNaKalendaru = document.getElementById("kalendarMjesec").textContent.split(' ')[1];
-
+        //let godinaNaKalendaru = document.getElementById("kalendarMjesec").textContent.split(' ')[1];
         // TODO DA CHECKBOX NEMA ULOGU KAD SE BOJE ZAUZECA?
-        if (kalendarRef != null && sala !== "" && pocetak !== "" && kraj !== "" && akademskaGodina === godinaNaKalendaru) {
+        if (kalendarRef != null && sala !== "" && pocetak !== "" && kraj !== "") {
             if (periodicna === true) {
                 for (var i = 0; i < redovnaZauzeca.length; i++) {
                     if (redovnaZauzeca[i].naziv === sala) {
@@ -144,7 +143,7 @@ let Kalendar = (function() {
         let prviDanMjeseca = ((new Date(godina, mjesec)).getDay() + 6) % 7;
         let brojDanaMjeseca = 32 - new Date(godina, mjesec, 32).getDate();
 
-        /*
+
         if (mjesec === 0)
             namjestiDugme(document.getElementById("prethodniBtn"), true);
         else
@@ -154,8 +153,6 @@ let Kalendar = (function() {
             namjestiDugme(document.getElementById("sljedeciBtn"), true);
         else
             namjestiDugme(document.getElementById("sljedeciBtn"), false);
-         */
-        // todo skontati sta sa godinama, da li 2020 ili 2019 ili sve
 
 
         // Postavljanje naziva za mjesec

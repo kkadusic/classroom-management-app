@@ -49,7 +49,7 @@ function rezervisi(kliknutiDan) {
     let kraj = document.getElementById("kraj").value;
 
     // todo namjestiti da indeks dana mora biti 0-4
-    if (sala !== "" && pocetak !== "" && kraj !== "" && kliknutiDan.children[1].className === "slobodna"){
+    if (sala !== "" && pocetak !== "" && kraj !== "" && kliknutiDan.children[1].className === "slobodna" && pocetak < kraj){
         if (semestar === "" && periodicna === true) // todo da mora pocetak prije kraja, napraviti posebnu f-ju za validiranje
             alert("Periodična rezervacija mora biti unutar zimskog ili ljetnog semestra.");
         else {
@@ -67,7 +67,7 @@ function rezervisi(kliknutiDan) {
         alert("Sala je zauzeta.");
     }
     else {
-        alert("Niste odabrali početak ili kraj zauzeća.");
+        alert("Niste odabrali početak ili kraj zauzeća.\nIli je početak nakon kraja rezervacije.");
     }
 }
 

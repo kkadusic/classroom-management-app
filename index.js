@@ -139,38 +139,166 @@ app.post('/rezervacija.html', function (req, res) {
 });
 
 
-
+/*
 app.get('/slika1', (req, res) => {
+    res.writeHead(200, {"Content-Type": "image/jpg"});
+    console.log(req.body);
+    console.log(req.textContent);
+    var count = 0;
+    var handler = function(error, content){
+        count++;
+        if (error){
+            console.log(error);
+        }
+        else{
+            res.write(content);
+        }
+
+        if (count === 3) {
+            res.end();
+        }
+    };
+
+    fs.readFile('slike/sala5.jpg', handler);
+    fs.readFile('slike/sala6.jpg', handler);
+    fs.readFile('slike/sala7.jpg', handler);
+});
+ */
+
+app.get('/slika1.jpg', (req, res) => {
     fs.readFile('slike/sala1.jpg', (err, podaci) => {
         if (err) {
-            res.writeHead(504, {'Content-Type': 'image/jpg'}); //x-jpg
+            res.writeHead(504, {'Content-Type': 'image/jpg'});
             throw err;
         }
-        res.writeHead(200, {'Content-Type': 'image/jpg'}); //x-jpg
+        res.writeHead(200, {'Content-Type': 'image/jpg'});
         res.end(podaci);
     });
 });
 
-app.get('/slika2', (req, res) => {
+app.get('/slika2.jpg', (req, res) => {
     fs.readFile('slike/sala2.jpg', (err, podaci) => {
         if (err) {
-            res.writeHead(504, {'Content-Type': 'image/jpg'}); //x-jpg
+            res.writeHead(504, {'Content-Type': 'image/jpg'});
             throw err;
         }
-        res.writeHead(200, {'Content-Type': 'image/jpg'}); //x-jpg
+        res.writeHead(200, {'Content-Type': 'image/jpg'});
         res.end(podaci);
     });
 });
 
-app.get('/slika3', (req, res) => {
+app.get('/slika3.jpg', (req, res) => {
     fs.readFile('slike/sala3.jpg', (err, podaci) => {
         if (err) {
-            res.writeHead(504, {'Content-Type': 'image/jpg'}); //x-jpg
+            res.writeHead(504, {'Content-Type': 'image/jpg'});
             throw err;
         }
-        res.writeHead(200, {'Content-Type': 'image/jpg'}); //x-jpg
+        res.writeHead(200, {'Content-Type': 'image/jpg'});
         res.end(podaci);
     });
 });
+
+app.get('/slika4.jpg', (req, res) => {
+    fs.readFile('slike/sala4.jpg', (err, podaci) => {
+        if (err) {
+            res.writeHead(504, {'Content-Type': 'image/jpg'});
+            throw err;
+        }
+        res.writeHead(200, {'Content-Type': 'image/jpg'});
+        res.end(podaci);
+    });
+});
+
+app.get('/slika5.jpg', (req, res) => {
+    fs.readFile('slike/sala5.jpg', (err, podaci) => {
+        if (err) {
+            res.writeHead(504, {'Content-Type': 'image/jpg'});
+            throw err;
+        }
+        res.writeHead(200, {'Content-Type': 'image/jpg'});
+        res.end(podaci);
+    });
+});
+
+app.get('/slika6.jpg', (req, res) => {
+    fs.readFile('slike/sala6.jpg', (err, podaci) => {
+        if (err) {
+            res.writeHead(504, {'Content-Type': 'image/jpg'});
+            throw err;
+        }
+        res.writeHead(200, {'Content-Type': 'image/jpg'});
+        res.end(podaci);
+    });
+});
+
+app.get('/slika7.jpg', (req, res) => {
+    fs.readFile('slike/sala7.jpg', (err, podaci) => {
+        if (err) {
+            res.writeHead(504, {'Content-Type': 'image/jpg'});
+            throw err;
+        }
+        res.writeHead(200, {'Content-Type': 'image/jpg'});
+        res.end(podaci);
+    });
+});
+
+app.get('/slika8.jpg', (req, res) => {
+    fs.readFile('slike/sala8.jpg', (err, podaci) => {
+        if (err) {
+            res.writeHead(504, {'Content-Type': 'image/jpg'});
+            throw err;
+        }
+        res.writeHead(200, {'Content-Type': 'image/jpg'});
+        res.end(podaci);
+    });
+});
+
+app.get('/slika9.jpg', (req, res) => {
+    fs.readFile('slike/sala9.jpg', (err, podaci) => {
+        if (err) {
+            res.writeHead(504, {'Content-Type': 'image/jpg'});
+            throw err;
+        }
+        res.writeHead(200, {'Content-Type': 'image/jpg'});
+        res.end(podaci);
+    });
+});
+
+app.get('/slika10.jpg', (req, res) => {
+    fs.readFile('slike/sala10.jpg', (err, podaci) => {
+        if (err) {
+            res.writeHead(504, {'Content-Type': 'image/jpg'});
+            throw err;
+        }
+        res.writeHead(200, {'Content-Type': 'image/jpg'});
+        res.end(podaci);
+    });
+});
+
+
+app.get('/slike1', (req, res) => {
+    let putanje = {slika1: "/slike/sala1.jpg", slika2: "/slike/sala2.jpg", slika3: "/slike/sala3.jpg"};
+    res.write(JSON.stringify(putanje));
+    res.send();
+});
+
+app.get('/slike2', (req, res) => {
+    let putanje = {slika1: "/slike/sala4.jpg", slika2: "/slike/sala5.jpg", slika3: "/slike/sala6.jpg"};
+    res.write(JSON.stringify(putanje));
+    res.send();
+});
+
+app.get('/slike3', (req, res) => {
+    let putanje = {slika1: "/slike/sala7.jpg", slika2: "/slike/sala8.jpg", slika3: "/slike/sala9.jpg"};
+    res.write(JSON.stringify(putanje));
+    res.send();
+});
+
+app.get('/slike4', (req, res) => {
+    let putanje = {slika1: "/slike/sala10.jpg"};
+    res.write(JSON.stringify(putanje));
+    res.send();
+});
+
 
 app.listen(8080);

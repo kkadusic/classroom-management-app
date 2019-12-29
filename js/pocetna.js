@@ -1,17 +1,36 @@
+var brojac = 1;
+
 window.onload = function() {
-    /*$(".slike").append('<img src="../slike/sala1.jpg" alt="sala1">');
-    $(".slike").append('<img src="../slike/sala2.jpg" alt="sala2">');
-    $(".slike").append('<img src="../slike/sala3.jpg" alt="sala3">');*/
-    Pozivi.ucitajSlike();
+    Pozivi.ucitajSlike(brojac);
+    namjestiButtone();
 };
 
 
-/*
-$(document).ready(function(){
-    $("#prethodnaSlikaBtn").click(function(){
-        $(".slike").append('<img src="../slike/sala1.jpg" alt="sala1">');
-        $(".slike").append('<img src="../slike/sala2.jpg" alt="sala2">');
-        $(".slike").append('<img src="../slike/sala3.jpg" alt="sala3">');
-    });
-});
- */
+function onemoguciDugme(dugme, disable) {
+    if (!dugme) return;
+    dugme.disabled = !!disable;
+}
+
+function namjestiButtone() {
+    if (brojac === 1)
+        onemoguciDugme(document.getElementById("prethodnaSlikaBtn"), true);
+    else
+        onemoguciDugme(document.getElementById("prethodnaSlikaBtn"), false);
+
+    if (brojac === 4)
+        onemoguciDugme(document.getElementById("sljedecaSlikaBtn"), true);
+    else
+        onemoguciDugme(document.getElementById("sljedecaSlikaBtn"), false);
+}
+
+function prethodneSlike(){
+    brojac--;
+    namjestiButtone();
+    Pozivi.ucitajSlike(brojac);
+}
+
+function sljedeceSlike(){
+    brojac++;
+    namjestiButtone();
+    Pozivi.ucitajSlike(brojac);
+}

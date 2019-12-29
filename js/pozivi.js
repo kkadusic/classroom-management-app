@@ -72,35 +72,28 @@ let Pozivi = (function(){
         ajax.send(JSON.stringify(vanredno));
     }
 
-
-    function ucitajSlikeImpl(){
-        /*$.ajax({
-            url: "/pocetna.html",
-            type: 'GET',
-            dataType: 'html',
-            async: true,
-            crossDomain: 'true',
-            success: function(data, status) {
-                console.log("Status: "+status+"\nData: "+data);
-                result = data;
-                console.log(data);
-                /!* creating image assuming data is the url of image *!/
-                var img = $('<img id="image_id">');
-                img.attr('src', 'data:image/jpg;base64,' + data);
-                img.appendTo('.sadrzaj');
-            }
-        });*/
+    function ucitajSlikeImpl(setSlika) {
         let ajax = new XMLHttpRequest();
         ajax.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
-                $(document).ready(function(){
-                    $(".slike").append('<img src="http://localhost:8080/slika1" alt="slika1">');
-                    $(".slike").append('<img src="http://localhost:8080/slika2" alt="slika2">');
-                    $(".slike").append('<img src="http://localhost:8080/slika3" alt="slika3">');
-                });
+                let podaci = JSON.parse(ajax.responseText);
+                if (setSlika !== 4) {
+                    $(document).ready(function () {
+                        $(".slike").empty();
+                        $(".slike").append('<img src="' + podaci.slika1 + '" alt="slika"">');
+                        $(".slike").append('<img src="' + podaci.slika2 + '" alt="slika"">');
+                        $(".slike").append('<img src="' + podaci.slika3 + '" alt="slika"">');
+                    });
+                }
+                else {
+                    $(document).ready(function () {
+                        $(".slike").empty();
+                        $(".slike").append('<img src="' + podaci.slika1 + '" alt="slika"">');
+                    });
+                }
             }
         };
-        ajax.open("GET", "/pocetna.html", true);
+        ajax.open("GET", "slike" + setSlika, true);
         ajax.send();
     }
 

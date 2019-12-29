@@ -1,28 +1,29 @@
 .sadrzaj {
     background-image: url("../slike/pozadina.png");
+    text-align: center;
+    padding: 50px;
     margin-top: 10px;
     border: 1px solid limegreen;
-    display: flex;
-    flex-wrap: wrap;
+    height: 500px;
 }
 
-.sadrzaj img {
-    margin-left: 30px;
-    margin-right: 30px;
-    width: 345px;
+.slike{
+    display: flex;
+}
+
+.slike img {
+    margin: 20px;
+    width: 305px;
     height: 200px;
 }
 
-.kolona {
-    flex: 33%;
-    max-width: 30%;
-    padding: 0 7px;
-}
-
-.kolona img {
-    margin-top: 20px;
-    vertical-align: middle;
-    width: 100%;
+.dugme {
+    height: 40px;
+    width: 90px;
+    background-color: rgba(242, 255, 251, 0.5);
+    border-radius: 5px;
+    font-size: 15px;
+    border: none;
 }
 
 @media screen and (max-width: 850px) {

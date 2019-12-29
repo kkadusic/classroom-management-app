@@ -3,6 +3,10 @@ let Kalendar = (function() {
     let danas = new Date();
     let mjesec = danas.getMonth();
     let godina = danas.getFullYear();
+
+    // Samo u ovoj godini se boje zauzeca
+    let akademskaGodina = godina.toString();
+
     const sviMjeseci = ["Januar", "Februar", "Mart", "April", "Maj", "Juni", "Juli", "August", "Septembar", "Oktobar", "Novembar", "Decembar"];
 
     var redovnaZauzeca = [];
@@ -63,7 +67,11 @@ let Kalendar = (function() {
             x.children[1].className = "slobodna";
         }
 
-        if (kalendarRef != null && sala !== "" && pocetak !== "" && kraj !== "") {
+        // todo onda nema potrebe za ovim?
+        let godinaNaKalendaru = document.getElementById("kalendarMjesec").textContent.split(' ')[1];
+
+        // TODO DA CHECKBOX NEMA ULOGU KAD SE BOJE ZAUZECA?
+        if (kalendarRef != null && sala !== "" && pocetak !== "" && kraj !== "" && akademskaGodina === godinaNaKalendaru) {
             if (periodicna === true) {
                 for (var i = 0; i < redovnaZauzeca.length; i++) {
                     if (redovnaZauzeca[i].naziv === sala) {
@@ -136,6 +144,7 @@ let Kalendar = (function() {
         let prviDanMjeseca = ((new Date(godina, mjesec)).getDay() + 6) % 7;
         let brojDanaMjeseca = 32 - new Date(godina, mjesec, 32).getDate();
 
+        /*
         if (mjesec === 0)
             namjestiDugme(document.getElementById("prethodniBtn"), true);
         else
@@ -145,12 +154,14 @@ let Kalendar = (function() {
             namjestiDugme(document.getElementById("sljedeciBtn"), true);
         else
             namjestiDugme(document.getElementById("sljedeciBtn"), false);
+         */
+        // todo skontati sta sa godinama, da li 2020 ili 2019 ili sve
 
 
         // Postavljanje naziva za mjesec
         obrisi('kalendarMjesec');
         var el = document.createElement('div');
-        el.innerHTML = '<h3>' + sviMjeseci[mjesec] + '</h3>';
+        el.innerHTML = '<h3>' + sviMjeseci[mjesec] + " " + godina + '</h3>';
         document.getElementById("kalendarMjesec").appendChild(el.firstChild);
 
         // Dodavanje dana iz proslog mjeseca
@@ -169,6 +180,21 @@ let Kalendar = (function() {
         }
     }
 
+    function dajSemestarImpl(mjesec){
+        if (mjesec === 0 || mjesec >= 9) return "zimski";
+        else if (mjesec >= 1 && mjesec <= 5) return "ljetni";
+    }
+
+    function dajImeDanaImpl(indeksDana){
+        if (indeksDana === 0) return "ponedjeljak";
+        else if (indeksDana === 1) return "utorak";
+        else if (indeksDana === 2) return "srijeda";
+        else if (indeksDana === 3) return "četvrtak";
+        else if (indeksDana === 4) return "petak";
+        else if (indeksDana === 5) return "subota";
+        else if (indeksDana === 6) return "nedjelja";
+    }
+
     return {
         obojiZauzeca: obojiZauzecaImpl,
         ucitajPodatke: ucitajPodatkeImpl,
@@ -177,7 +203,9 @@ let Kalendar = (function() {
         sljedeci: sljedeciImpl,
         dajMjesec: dajMjesecImpl,
         dajGodinu: dajGodinuImpl,
-        ocistiPodatke: ocistiPodatkeImpl
+        ocistiPodatke: ocistiPodatkeImpl,
+        dajImeDana: dajImeDanaImpl,
+        dajSemestar: dajSemestarImpl
     }
 
 }());

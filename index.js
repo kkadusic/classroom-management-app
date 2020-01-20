@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const app = express();
 const path = require('path');
+const db = require('./db.js');
 
 
 app.use('/css', express.static(path.join(__dirname + '/css')));
@@ -13,6 +14,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
+db.sequelize.sync({
+    force: true
+});
 
 
 app.get('/', (req, res) => {

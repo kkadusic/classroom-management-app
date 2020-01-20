@@ -1,5 +1,6 @@
 window.onload = function() {
     Pozivi.ucitajJsonZauzeca();
+    Pozivi.ucitajOsobljeIzBaze();
 };
 
 document.getElementById("forma").addEventListener("change", unosNaFormi);
@@ -68,6 +69,16 @@ function rezervisi(kliknutiDan) {
     }
     else {
         alert("Niste odabrali početak ili kraj zauzeća.\nIli je početak nakon kraja rezervacije.");
+    }
+}
+
+function dodajOsobljeIzBaze(osobljeJson){
+    for (var i = 0; i < osobljeJson.length; i++){
+        var osobljeSelect = document.getElementById("osoblje");
+        var option = document.createElement("option");
+        option.value = osobljeJson[i].ime + " " + osobljeJson[i].prezime;
+        option.text = osobljeJson[i].ime + " " + osobljeJson[i].prezime;
+        osobljeSelect.add(option);
     }
 }
 

@@ -3,6 +3,18 @@ let Pozivi = (function(){
     let periodicna = [];
     let vanredna = [];
 
+    function ucitajOsobljeIzBazeImpl(){
+        let ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                let osobljeJson = JSON.parse(this.responseText);
+                dodajOsobljeIzBaze(osobljeJson);
+            }
+        };
+        ajax.open("GET", "/osobe.html", true);
+        ajax.send();
+    }
+
     function ucitajJsonZauzecaImpl() {
         let ajax = new XMLHttpRequest();
         ajax.onreadystatechange = function() {
@@ -114,7 +126,8 @@ let Pozivi = (function(){
         ucitajObojiJsonZauzeca: ucitajObojiJsonZauzecaImpl,
         dodajPeriodicnoZauzece: dodajPeriodicnoZauzeceImpl,
         dodajVanrednoZauzece: dodajVanrednoZauzeceImpl,
-        ucitajSlike: ucitajSlikeImpl
+        ucitajSlike: ucitajSlikeImpl,
+        ucitajOsobljeIzBaze: ucitajOsobljeIzBazeImpl
     }
 
 }());

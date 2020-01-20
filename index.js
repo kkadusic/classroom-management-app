@@ -15,16 +15,17 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+
 db.sequelize.sync({
     force: true
-}).then(function() {
-    inicijalizacija().then(function() {
+}).then(function () {
+    inicijalizacija().then(function () {
         console.log("Zavrseno kreiranje tabela i ubacivanje pocetnih podataka!");
         process.exit();
     });
 });
 
-function inicijalizacija(){
+function inicijalizacija() {
     let osobljeListaPromisea = [];
     let rezervacijeListaPromisea = [];
     let terminiListaPromisea = [];
@@ -144,6 +145,23 @@ app.get('/unos.html', (req, res) => {
     res.sendFile(path.join(__dirname, '/html/unos.html'));
 });
 
+app.get('/osobe.html', (req, res) => {
+    var niz = [];
+    db.osoblje.findAll().then(function (podaci) {
+        for (var i = 0; i < podaci.length; i++) {
+            var objekat = {
+                id: podaci[i].id,
+                ime: podaci[i].ime,
+                prezime: podaci[i].prezime,
+                uloga: podaci[i].uloga
+            };
+            niz.push(objekat);
+        }
+        res.writeHead(200, {"Content-Type": "application/json"});
+        res.end(JSON.stringify(niz));
+    });
+});
+
 app.get('/zauzeca.json', (req, res) => {
     fs.readFile('zauzeca.json', (err, podaci) => {
         if (err) {
@@ -155,7 +173,7 @@ app.get('/zauzeca.json', (req, res) => {
     });
 });
 
-function validirajNaServeru(zauzecaJson, novoZauzece){
+function validirajNaServeru(zauzecaJson, novoZauzece) {
     if (Object.keys(novoZauzece).length === 6) { // novoZauzece je periodicno
         for (var i = 0; i < zauzecaJson.periodicna.length; i++) {
             if (JSON.stringify(zauzecaJson.periodicna[i]) === JSON.stringify(novoZauzece)) {
@@ -168,35 +186,34 @@ function validirajNaServeru(zauzecaJson, novoZauzece){
                 return false;
             }
             // Provjera preklapanja periodicnog-novoZauzece zauzeca sa vanrednim
-            for (var i = 0; i < zauzecaJson.vanredna.length; i++){
-                let dan = parseInt(zauzecaJson.vanredna[i].datum.substr(0,2), 10);
-                let mjesec = parseInt(zauzecaJson.vanredna[i].datum.substr(3,2), 10);
+            for (var i = 0; i < zauzecaJson.vanredna.length; i++) {
+                let dan = parseInt(zauzecaJson.vanredna[i].datum.substr(0, 2), 10);
+                let mjesec = parseInt(zauzecaJson.vanredna[i].datum.substr(3, 2), 10);
                 let godina = parseInt(zauzecaJson.vanredna[i].datum.substr(6, 10), 10);
-                let datum = new Date(godina, mjesec-1, dan);
+                let datum = new Date(godina, mjesec - 1, dan);
                 let indeksDana = (datum.getDay() + 6) % 7;
                 let semestarVanrednog = "";
-                if (mjesec-1 === 0 || mjesec-1 >= 9)
+                if (mjesec - 1 === 0 || mjesec - 1 >= 9)
                     semestarVanrednog = "zimski";
-                else if (mjesec-1 >= 1 && mjesec-1 <= 5)
+                else if (mjesec - 1 >= 1 && mjesec - 1 <= 5)
                     semestarVanrednog = "ljetni";
                 if (semestarVanrednog === novoZauzece.semestar && indeksDana === novoZauzece.dan &&
                     novoZauzece.pocetak < zauzecaJson.vanredna[i].kraj && zauzecaJson.vanredna[i].pocetak < novoZauzece.kraj &&
-                    novoZauzece.naziv === zauzecaJson.vanredna[i].naziv){
+                    novoZauzece.naziv === zauzecaJson.vanredna[i].naziv) {
                     return false;
                 }
             }
         }
-    }
-    else {
-        let dan = parseInt(novoZauzece.datum.substr(0,2), 10);
-        let mjesec = parseInt(novoZauzece.datum.substr(3,2), 10);
+    } else {
+        let dan = parseInt(novoZauzece.datum.substr(0, 2), 10);
+        let mjesec = parseInt(novoZauzece.datum.substr(3, 2), 10);
         let godina = parseInt(novoZauzece.datum.substr(6, 10), 10);
-        let datum = new Date(godina, mjesec-1, dan);
+        let datum = new Date(godina, mjesec - 1, dan);
         let indeksDana = (datum.getDay() + 6) % 7;
         let semestarVanrednog = "";
-        if (mjesec-1 === 0 || mjesec-1 >= 9)
+        if (mjesec - 1 === 0 || mjesec - 1 >= 9)
             semestarVanrednog = "zimski";
-        else if (mjesec-1 >= 1 && mjesec-1 <= 5)
+        else if (mjesec - 1 >= 1 && mjesec - 1 <= 5)
             semestarVanrednog = "ljetni";
 
         for (var i = 0; i < zauzecaJson.vanredna.length; i++) {
@@ -210,10 +227,10 @@ function validirajNaServeru(zauzecaJson, novoZauzece){
             }
         }
         // Provjera preklapanja vanrednog-novoZauzece zauzeca sa periodicnim
-        for (var i = 0; i < zauzecaJson.periodicna.length; i++){
+        for (var i = 0; i < zauzecaJson.periodicna.length; i++) {
             if (semestarVanrednog === zauzecaJson.periodicna[i].semestar && indeksDana === zauzecaJson.periodicna[i].dan &&
                 novoZauzece.pocetak < zauzecaJson.periodicna[i].kraj && zauzecaJson.periodicna[i].pocetak < novoZauzece.kraj &&
-                novoZauzece.naziv === zauzecaJson.periodicna[i].naziv){
+                novoZauzece.naziv === zauzecaJson.periodicna[i].naziv) {
                 return false;
             }
         }
@@ -224,7 +241,7 @@ function validirajNaServeru(zauzecaJson, novoZauzece){
 
 app.post('/rezervacija.html', function (req, res) {
     let novoZauzece = req.body;
-    fs.readFile('zauzeca.json', 'utf-8', function(err, data) {
+    fs.readFile('zauzeca.json', 'utf-8', function (err, data) {
         if (err) throw err;
         var zauzecaJson = JSON.parse(data);
 

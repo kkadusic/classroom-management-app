@@ -13,15 +13,15 @@ module.exports = function(sequelize) {
         },
         dan: {
             type: Sequelize.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
         datum: {
             type: Sequelize.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         semestar: {
             type: Sequelize.STRING, // todo provjeriti da li da ostane string
-            allowNull: false,
+            allowNull: true,
         },
         pocetak: {
             type: Sequelize.TIME,

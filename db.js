@@ -17,22 +17,22 @@ db.sala = sequelize.import(__dirname + '/modeli/sala.js');
 
 // Relacije
 db.osoblje.hasMany(db.rezervacija, {
-    as: 'rezervacije',
+    as: 'rezervacijaOsoblje',
     foreignKey: 'osoba'
 });
 
 db.rezervacija.belongsTo(db.termin, {
-    as: 'rezervacije',
+    as: 'terminRezervacija',
     foreignKey: 'termin'
 });
 
 db.sala.hasMany(db.rezervacija, {
-    as: 'rezervacije',
+    as: 'rezervacijaSala',
     foreignKey: 'sala'
 });
 
 db.sala.belongsTo(db.osoblje, {
-    as: 'sale',
+    as: 'osobljeSala',
     foreignKey: 'zaduzenaOsoba'
 });
 

@@ -48,6 +48,7 @@ function rezervisi(kliknutiDan) {
     let periodicna = document.getElementById("periodicna").checked.valueOf();
     let pocetak = document.getElementById("pocetak").value;
     let kraj = document.getElementById("kraj").value;
+    let predavac = document.getElementById("osoblje").value;
 
 
     if (sala !== "" && pocetak !== "" && kraj !== "" && kliknutiDan.children[1].className === "slobodna" && pocetak < kraj){
@@ -56,10 +57,10 @@ function rezervisi(kliknutiDan) {
         else {
             var odgovor = confirm("Da li želite da rezervišete ovaj termin?");
             if (odgovor === true && periodicna === true){
-                Pozivi.dodajPeriodicnoZauzece(indeksDana, semestar, pocetak, kraj, sala, "");
+                Pozivi.dodajPeriodicnoZauzece(indeksDana, semestar, pocetak, kraj, sala, predavac);
             }
             else if (odgovor === true && periodicna === false){
-                Pozivi.dodajVanrednoZauzece(datum, pocetak, kraj, sala, "");
+                Pozivi.dodajVanrednoZauzece(datum, pocetak, kraj, sala, predavac);
             }
         }
     }
@@ -76,8 +77,8 @@ function dodajOsobljeIzBaze(osobljeJson){
     for (var i = 0; i < osobljeJson.length; i++){
         var osobljeSelect = document.getElementById("osoblje");
         var option = document.createElement("option");
-        option.value = osobljeJson[i].ime + " " + osobljeJson[i].prezime;
-        option.text = osobljeJson[i].ime + " " + osobljeJson[i].prezime;
+        option.value = osobljeJson[i].ime + " " + osobljeJson[i].prezime + " " + osobljeJson[i].uloga;
+        option.text = osobljeJson[i].ime + " " + osobljeJson[i].prezime + " " + osobljeJson[i].uloga;
         osobljeSelect.add(option);
     }
 }

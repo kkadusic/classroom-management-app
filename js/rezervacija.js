@@ -1,5 +1,5 @@
 window.onload = function() {
-    Pozivi.ucitajJsonZauzeca();
+    Pozivi.ucitajJsonZauzeca(true);
     Pozivi.ucitajOsobljeIzBaze();
 };
 

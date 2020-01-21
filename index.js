@@ -4,6 +4,19 @@ const fs = require('fs');
 const app = express();
 const path = require('path');
 const db = require('./db.js');
+var mysql = require('mysql2');
+
+var con = mysql.createConnection({
+    host: "127.0.0.1",
+    user: "root",
+    password: "root",
+    database: "DBWT19"
+});
+
+con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected to database!");
+});
 
 
 app.use('/css', express.static(path.join(__dirname + '/css')));
@@ -17,7 +30,7 @@ app.use(bodyParser.urlencoded({
 
 
 db.sequelize.sync({
-    force: true // todo ostaviti ili ne?
+    force: true
 }).then(function () {
     inicijalizacija().then(function () {
         console.log("Zavrseno kreiranje tabela i ubacivanje pocetnih podataka!");
@@ -102,6 +115,13 @@ app.get('/unos.html', (req, res) => {
     res.sendFile(path.join(__dirname, '/html/unos.html'));
 });
 
+/*
+app.get('/osoblje.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '/html/osoblje.html'));
+});
+ */
+
+
 app.get('/osoblje', (req, res) => {
     var osoblje = [];
     db.osoblje.findAll().then(function (podaci) {
@@ -119,6 +139,39 @@ app.get('/osoblje', (req, res) => {
     });
 });
 
+function provjeriVrijeme(zauzeca){
+    var danas = new Date();
+    let vrijeme = danas.getHours() + ":" + danas.getMinutes();
+    let indeksDana = (danas.getDay() + 6) % 7;
+    let mjesec = Kalendar.dajMjesec() + 1;
+    let dan = danas.getDate().toString();
+    if (dan.toString().length === 1){
+        dan = "0" + dan;
+    }
+    let datum = "";
+    if (mjesec.toString().length === 1)
+        datum = dan + ".0" + mjesec + "." + Kalendar.dajGodinu();
+    else
+        datum = dan + "." + mjesec + "." + Kalendar.dajGodinu();
+    //let datumObjekat = new Date(Kalendar.dajGodinu(), mjesec-1, parseInt(dan, 10));
+    console.log("WWWWWWWWW->" + Kalendar.dajPeriodicnaZauzeca().length);
+}
+
+app.get('/osoblje.html', (req, res) => {
+    console.log("GETT");
+    console.log(JSON.stringify(zauzeca));
+
+    var sql = "SELECT o.ime, o.prezime, o.uloga, s.naziv " +
+        "FROM osoblje o LEFT JOIN sala s " +
+        "ON s.zaduzenaOsoba = o.id";
+    con.query(sql, function(err, result) {
+        if (err) throw err;
+        res.render(path.join(__dirname, '/html/nesto.ejs'), {
+            redovi: result
+        });
+    });
+});
+
 let zauzeca = {
     periodicna: [],
     vanredna: []
@@ -130,7 +183,7 @@ app.get('/zauzeca.json', (req, res) => {
     let periodicna = [];
     let vanredna = [];
     db.rezervacija.findAll().then(function (rezervacije) {
-        console.log("REZERVACIJE: " + JSON.stringify(rezervacije));
+        //console.log("REZERVACIJE: " + JSON.stringify(rezervacije));
             for (let i = 0; i < rezervacije.length; i++) {
                 db.termin.findOne({
                     where: {
@@ -148,11 +201,6 @@ app.get('/zauzeca.json', (req, res) => {
                             }
                         }).then(function (osoba) {
                             osobaPodaci = osoba;
-                            /*
-                            console.log(JSON.stringify(termin));
-                            console.log(JSON.stringify(sala));
-                            console.log(JSON.stringify(osoba));
-                             */
                             if (termin.redovni === true){
                                 let p = {
                                     dan: termin.dan,
@@ -174,12 +222,10 @@ app.get('/zauzeca.json', (req, res) => {
                                 };
                                 vanredna.push(v);
                             }
-
                         });
                     });
                 });
             }
-
         });
 
     zauzeca = {
@@ -190,21 +236,10 @@ app.get('/zauzeca.json', (req, res) => {
     setTimeout(function () {
         //console.log("vanredna: " + JSON.stringify(vanredna));
         //console.log("redovna: " + JSON.stringify(periodicna));
-        console.log("SVA ZAUZECA: " + JSON.stringify(zauzeca));
+        //console.log("SVA ZAUZECA: " + JSON.stringify(zauzeca));
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end(JSON.stringify(zauzeca));
     }, 100);
-
-    /*
-    fs.readFile('zauzeca.json', (err, podaci) => {
-        if (err) {
-            res.writeHead(504, {'Content-Type': 'application/json'});
-            throw err;
-        }
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(podaci);
-    });
-     */
 });
 
 
@@ -275,7 +310,7 @@ function validirajNaServeru(zauzecaJson, novoZauzece) {
 
 
 function dodajZauzeceUBazu(novoZauzece) {
-    console.log("DODAJ zauzece u bazu");
+    //console.log("DODAJ zauzece u bazu");
     let jelRedovno = true;
     if (Object.keys(novoZauzece).length === 5)
         jelRedovno = false;
@@ -332,35 +367,6 @@ app.post('/rezervacija.html', function (req, res) {
         // todo da pravu osobu nadje
         res.send(JSON.stringify(osobaPodaci));
     }
-
-    /*
-    fs.readFile('zauzeca.json', 'utf-8', function (err, data) {
-        if (err) throw err;
-        var zauzecaJson = JSON.parse(data);
-        if (validirajNaServeru(zauzecaJson, novoZauzece) === true) {
-            if (Object.keys(novoZauzece).length === 6) {    // PERIODICNO ZAUZECE
-                zauzecaJson.periodicna.push(novoZauzece);
-                dodajZauzeceUBazu(novoZauzece);
-            } else {                                          // VANREDNO ZAUZECE
-                zauzecaJson.vanredna.push(novoZauzece);
-                dodajZauzeceUBazu(novoZauzece);
-            }
-
-            fs.writeFile('zauzeca.json', JSON.stringify(zauzecaJson), 'utf-8', function (err) {
-                if (err) throw err;
-                console.log('Upisano novo zauzece!');
-            });
-            res.send("Uspjesno upisano");
-
-
-        }
-        // Ako je zauzeće upisano, kao odgovor sa servera vratite podatke o svim zauzećima uključujući i posljednje
-        else {
-            res.send({zauzecaJson: zauzecaJson, novoZauzece: novoZauzece});
-        }
-    })
-
-     */
 });
 
 

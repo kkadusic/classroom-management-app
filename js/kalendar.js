@@ -13,6 +13,14 @@ let Kalendar = (function() {
     var redovnaZauzeca = [];
     var vanrednaZauzeca = [];
 
+    function dajPeriodicnaZauzecaImpl(){
+        return redovnaZauzeca;
+    }
+
+    function dajVanrednaZauzecaImpl(){
+        return vanrednaZauzeca;
+    }
+
     function dajMjesecImpl() {
         return mjesec;
     }
@@ -201,7 +209,9 @@ let Kalendar = (function() {
         dajGodinu: dajGodinuImpl,
         ocistiPodatke: ocistiPodatkeImpl,
         dajImeDana: dajImeDanaImpl,
-        dajSemestar: dajSemestarImpl
+        dajSemestar: dajSemestarImpl,
+        dajPeriodicnaZauzeca: dajPeriodicnaZauzecaImpl,
+        dajVanrednaZauzeca: dajVanrednaZauzecaImpl
     }
 
 }());

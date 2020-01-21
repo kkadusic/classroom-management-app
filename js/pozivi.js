@@ -16,7 +16,30 @@ let Pozivi = (function(){
         ajax.send();
     }
 
-    function ucitajJsonZauzecaImpl() {
+    function ucitajListuOsobljaSaBazeImpl(){
+        /*let ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                let osobljeJson = JSON.parse(this.responseText);
+                dodajListuOsobljaIzBaze(osobljeJson);
+            }
+        };
+        ajax.open("GET", "/osoblje", true);
+        ajax.send();*/
+    }
+
+    function ucitajUEjsImpl(){
+        let ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+
+            }
+        };
+        ajax.open("GET", "/osoblje.html", true);
+        ajax.send();
+    }
+
+    function ucitajJsonZauzecaImpl(iscrtaj) {
         console.log("ucitajJSonZauzeca");
         let ajax = new XMLHttpRequest();
         ajax.onreadystatechange = function() {
@@ -27,7 +50,10 @@ let Pozivi = (function(){
                 for (var i = 0; i < zauzecaJson.vanredna.length; i++)
                     vanredna.push(zauzecaJson.vanredna[i]);
                 Kalendar.ucitajPodatke(periodicna, vanredna);
-                Kalendar.iscrtajKalendar(document.getElementById("kalendarDatum"), Kalendar.dajMjesec());
+                if (iscrtaj === true)
+                    Kalendar.iscrtajKalendar(document.getElementById("kalendarDatum"), Kalendar.dajMjesec());
+                trenutnoVrijemeRezervacija();
+                ucitajUEjsImpl();
             }
         };
         ajax.open("GET", "../zauzeca.json", true);
@@ -141,7 +167,9 @@ let Pozivi = (function(){
         dodajPeriodicnoZauzece: dodajPeriodicnoZauzeceImpl,
         dodajVanrednoZauzece: dodajVanrednoZauzeceImpl,
         ucitajSlike: ucitajSlikeImpl,
-        ucitajOsobljeIzBaze: ucitajOsobljeIzBazeImpl
+        ucitajOsobljeIzBaze: ucitajOsobljeIzBazeImpl,
+        ucitajListuOsobljaSaBaze: ucitajListuOsobljaSaBazeImpl,
+        ucitajUEjs: ucitajUEjsImpl
     }
 
 }());

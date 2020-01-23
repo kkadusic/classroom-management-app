@@ -248,7 +248,21 @@ app.get('/osoblje', (req, res) => {
     });
 });
 
-
+app.get('/sale', (req, res) => {
+    let listaSala = [];
+    db.sala.findAll().then(function (sale) {
+        for (var i = 0; i < sale.length; i++) {
+            let osoba = {
+                id: sale[i].id,
+                naziv: sale[i].naziv,
+                zaduzenaOsoba: sale[i].zaduzenaOsoba
+            };
+            listaSala.push(osoba);
+        }
+        res.writeHead(200, {"Content-Type": "application/json"});
+        res.end(JSON.stringify(listaSala));
+    });
+});
 
 
 let zauzeca = {
@@ -454,22 +468,6 @@ app.get('/osobljeSala', function(req, res) {
                     for(let i = 0; i < osobe.length; i++) {
                         kontrola = false;
                         for(let j = 0; j < rez.length; j++) {
-
-                            /*
-                            console.log("ITERACIJA ---------------------");
-                            console.log(osobe[i].id);
-                            console.log(rez[j].osoba);
-                            console.log(rez[j].termin);
-                            console.log(ter[rez[j].termin - 1].id);
-                            console.log((ter[rez[j].termin - 1]).pocetak);
-                            console.log(ter[rez[j].termin - 1].kraj);
-                            console.log(vrijeme);
-                            console.log(ter[rez[j].termin - 1].datum);
-                            console.log(ter[rez[j].termin - 1].dan);
-                            console.log(datum);
-                            console.log(indeksDana);
-                             */
-
                             if(osobe[i].id === rez[j].osoba && rez[j].termin === ter[rez[j].termin - 1].id &&
                                 ter[rez[j].termin - 1].pocetak < vrijeme && ter[rez[j].termin - 1].kraj > vrijeme
                                 && (ter[rez[j].termin - 1].datum === datum || ter[rez[j].termin - 1].dan === indeksDana)) {
@@ -651,3 +649,5 @@ app.get('/slike4', (req, res) => {
 app.listen(8080, function () {
     console.log('Express server na portu 3000.');
 });
+
+module.exports = app;

@@ -183,4 +183,46 @@ describe("GET /osoblje", function () {
     });
 });
 
+describe("GET /zauzeca.json", function () {
+    it("GET /zauzeca.json - citanje zauzeca iz baze, JSON objekat (status code 200)", function (done) {
+        supertest(app)
+            .get("/zauzeca.json")
+            .expect(200)
+            .expect(function (res) {
+                res.body = [{
+                    id: 1,
+                    ime: 'Neko',
+                    prezime: 'Nekić',
+                    uloga: 'profesor'
+                }, {
+                    id: 2,
+                    ime: "Drugi",
+                    prezime: "Neko",
+                    uloga: "asistent"
+                }, {
+                    id: 3,
+                    ime: "Test",
+                    prezime: "Test",
+                    uloga: "asistent"
+                }];
+            })
+            .expect(200, [{
+                id: 1,
+                ime: 'Neko',
+                prezime: 'Nekić',
+                uloga: 'profesor'
+            }, {
+                id: 2,
+                ime: "Drugi",
+                prezime: "Neko",
+                uloga: "asistent"
+            }, {
+                id: 3,
+                ime: "Test",
+                prezime: "Test",
+                uloga: "asistent"
+            }], done);
+    });
+});
+
 

@@ -1,9 +1,9 @@
-let Pozivi = (function(){
+let Pozivi = (function () {
 
-    function ucitajOsobljeIzBazeImpl(){
+    function ucitajOsobljeIzBazeImpl() {
         console.log("ucitajOsobljeIzBaze");
         let ajax = new XMLHttpRequest();
-        ajax.onreadystatechange = function() {
+        ajax.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
                 let osobljeJson = JSON.parse(this.responseText);
                 dodajOsobljeIzBaze(osobljeJson);
@@ -13,9 +13,9 @@ let Pozivi = (function(){
         ajax.send();
     }
 
-    function ucitajOsobljeSaTrenutnimSalamaImpl(){
+    function ucitajOsobljeSaTrenutnimSalamaImpl() {
         let ajax = new XMLHttpRequest();
-        ajax.onreadystatechange = function() {
+        ajax.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
                 prikaziOsobljeSaTrenutnimSalamaNaStranici(JSON.parse(this.responseText));
             }
@@ -28,7 +28,7 @@ let Pozivi = (function(){
     function ucitajJsonZauzecaImpl(iscrtaj) {
         console.log("ucitajJSonZauzeca");
         let ajax = new XMLHttpRequest();
-        ajax.onreadystatechange = function() {
+        ajax.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
                 let zauzecaJson = JSON.parse(this.responseText);
                 Kalendar.ucitajPodatke(zauzecaJson.periodicna, zauzecaJson.vanredna);
@@ -43,7 +43,7 @@ let Pozivi = (function(){
     function ucitajObojiJsonZauzecaImpl(sala, per, poc, kraj) {
         console.log("ucitajObojiJSonZauzeca");
         let ajax = new XMLHttpRequest();
-        ajax.onreadystatechange = function() {
+        ajax.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
                 let zauzecaJson = JSON.parse(this.responseText);
                 document.getElementById("kalendarDatum").innerHTML = "";
@@ -57,16 +57,16 @@ let Pozivi = (function(){
 
     }
 
-    function dodajPeriodicnoZauzeceImpl(dan, semestar, pocetak, kraj, naziv, predavac){
+    function dodajPeriodicnoZauzeceImpl(dan, semestar, pocetak, kraj, naziv, predavac) {
         let periodicno = {dan: dan, semestar: semestar, pocetak: pocetak, kraj: kraj, naziv: naziv, predavac: predavac};
         let ajax = new XMLHttpRequest();
-        ajax.onreadystatechange = function() {
-            if (ajax.readyState === 4 && ajax.status === 200){
-                // todo uzas
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState === 4 && ajax.status === 200) {
+                // uzas
                 ucitajObojiJsonZauzecaImpl(naziv, true, pocetak, kraj);
                 ucitajObojiJsonZauzecaImpl(naziv, true, pocetak, kraj);
                 if (this.responseText !== "Uspjesno upisano")
-                    alert("Rezervacija sale " +  naziv + " periodično za dan " + Kalendar.dajImeDana(dan) + ", " + semestar +
+                    alert("Rezervacija sale " + naziv + " periodično za dan " + Kalendar.dajImeDana(dan) + ", " + semestar +
                         " semestar, u periodu od " + pocetak + " do " + kraj + " nije moguća." + " Podaci o osobi:\n"
                         + "Ime: " + JSON.parse(this.responseText).ime + "\nPrezime: " + JSON.parse(this.responseText).prezime
                         + "\nUloga: " + JSON.parse(this.responseText).uloga);
@@ -78,13 +78,13 @@ let Pozivi = (function(){
     }
 
 
-    function dodajVanrednoZauzeceImpl(datum, pocetak, kraj, naziv, predavac){
+    function dodajVanrednoZauzeceImpl(datum, pocetak, kraj, naziv, predavac) {
         console.log("dodajVanrednoZauzeceImpl");
         let vanredno = {datum: datum, pocetak: pocetak, kraj: kraj, naziv: naziv, predavac: predavac};
         let ajax = new XMLHttpRequest();
-        ajax.onreadystatechange = function() {
-            if (ajax.readyState === 4 && ajax.status === 200){
-                // todo uzas
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState === 4 && ajax.status === 200) {
+                // uzas
                 ucitajObojiJsonZauzecaImpl(naziv, false, pocetak, kraj);
                 ucitajObojiJsonZauzecaImpl(naziv, false, pocetak, kraj);
                 if (this.responseText !== "Uspjesno upisano") {
@@ -103,7 +103,7 @@ let Pozivi = (function(){
     function ucitajSlikeImpl(setSlikaIndeks) {
         if (dosaoDoKraja === true) return 0;
         let ajax = new XMLHttpRequest();
-        ajax.onreadystatechange = function() {
+        ajax.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
 
                 let podaci = JSON.parse(ajax.responseText);
@@ -121,8 +121,7 @@ let Pozivi = (function(){
                         $(".slike").append('<img src="' + podaci.slika2 + '" alt="slika""></a>');
                         $(".slike").append('<img src="' + podaci.slika3 + '" alt="slika""></a>');
                     });
-                }
-                else {
+                } else {
                     $(document).ready(function () {
                         // var prvaSlikaBroj = podaci.slika1.toString().replace(/\D/g,'') + ".jpg";
                         $(".slike").empty();

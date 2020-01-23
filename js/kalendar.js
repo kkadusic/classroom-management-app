@@ -1,4 +1,4 @@
-let Kalendar = (function() {
+let Kalendar = (function () {
 
     let danas = new Date();
     let mjesec = danas.getMonth();
@@ -13,11 +13,11 @@ let Kalendar = (function() {
     var redovnaZauzeca = [];
     var vanrednaZauzeca = [];
 
-    function dajPeriodicnaZauzecaImpl(){
+    function dajPeriodicnaZauzecaImpl() {
         return redovnaZauzeca;
     }
 
-    function dajVanrednaZauzecaImpl(){
+    function dajVanrednaZauzecaImpl() {
         return vanrednaZauzeca;
     }
 
@@ -25,7 +25,7 @@ let Kalendar = (function() {
         return mjesec;
     }
 
-    function dajGodinuImpl(){
+    function dajGodinuImpl() {
         return godina;
     }
 
@@ -71,7 +71,7 @@ let Kalendar = (function() {
         let brojDanaMjeseca = 32 - new Date(godina, mjesec, 32).getDate();
 
         // Brisanje zauzetih datuma prije ucitavanja novih (refresh)
-        for (var i = prviDanMjeseca; i < brojDanaMjeseca +  prviDanMjeseca; i++) {
+        for (var i = prviDanMjeseca; i < brojDanaMjeseca + prviDanMjeseca; i++) {
             var x = document.getElementsByClassName("kalendarBroj")[i];
             x.children[1].className = "slobodna";
         }
@@ -90,8 +90,7 @@ let Kalendar = (function() {
                         }
                     }
                 }
-            }
-            else {
+            } else {
                 for (var i = 0; i < vanrednaZauzeca.length; i++) {
                     if (vanrednaZauzeca[i].naziv === sala) {
                         if ((pocetak < vanrednaZauzeca[i].kraj) && (vanrednaZauzeca[i].pocetak < kraj)) {
@@ -184,12 +183,12 @@ let Kalendar = (function() {
         }
     }
 
-    function dajSemestarImpl(mjesec){
+    function dajSemestarImpl(mjesec) {
         if (mjesec === 0 || mjesec >= 9) return "zimski";
         else if (mjesec >= 1 && mjesec <= 5) return "ljetni";
     }
 
-    function dajImeDanaImpl(indeksDana){
+    function dajImeDanaImpl(indeksDana) {
         if (indeksDana === 0) return "ponedjeljak";
         else if (indeksDana === 1) return "utorak";
         else if (indeksDana === 2) return "srijeda";

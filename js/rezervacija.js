@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function () {
     Pozivi.ucitajJsonZauzeca(true);
     Pozivi.ucitajOsobljeIzBaze();
 };
@@ -25,7 +25,7 @@ function sljedeci() {
 function rezervisi(kliknutiDan) {
     let mjesec = parseInt(Kalendar.dajMjesec(), 10) + 1;
     let dan = kliknutiDan.textContent.trim();
-    if (dan.length === 1){
+    if (dan.length === 1) {
         dan = "0" + dan;
     }
 
@@ -35,7 +35,7 @@ function rezervisi(kliknutiDan) {
     else
         datum = dan + "." + mjesec + "." + Kalendar.dajGodinu();
 
-    let datumObjekat = new Date(Kalendar.dajGodinu(), mjesec-1, parseInt(dan, 10));
+    let datumObjekat = new Date(Kalendar.dajGodinu(), mjesec - 1, parseInt(dan, 10));
     let indeksDana = (datumObjekat.getDay() + 6) % 7;
 
     let semestar = "";
@@ -51,30 +51,28 @@ function rezervisi(kliknutiDan) {
     let predavac = document.getElementById("osoblje").value;
 
 
-    if (sala !== "" && pocetak !== "" && kraj !== "" && kliknutiDan.children[1].className === "slobodna" && pocetak < kraj){
+    if (sala !== "" && pocetak !== "" && kraj !== "" && kliknutiDan.children[1].className === "slobodna" && pocetak < kraj) {
         if (semestar === "" && periodicna === true)
             alert("Periodična rezervacija mora biti unutar zimskog ili ljetnog semestra.");
         else {
             var odgovor = confirm("Da li želite da rezervišete ovaj termin?");
-            if (odgovor === true && periodicna === true){
+            if (odgovor === true && periodicna === true) {
                 Pozivi.dodajPeriodicnoZauzece(indeksDana, semestar, pocetak, kraj, sala, predavac);
-            }
-            else if (odgovor === true && periodicna === false){
+            } else if (odgovor === true && periodicna === false) {
                 Pozivi.dodajVanrednoZauzece(datum, pocetak, kraj, sala, predavac);
             }
         }
     }
     // Ako se sa klijentske strane prijavi greska o zauzecu onda nema potrebe da se dalje salje request serveru
-    else if (sala !== "" && pocetak !== "" && kraj !== "" && kliknutiDan.children[1].className === "zauzeta"){
+    else if (sala !== "" && pocetak !== "" && kraj !== "" && kliknutiDan.children[1].className === "zauzeta") {
         alert("Sala je zauzeta.");
-    }
-    else {
+    } else {
         alert("Niste odabrali početak ili kraj zauzeća.\nIli je početak nakon kraja rezervacije.");
     }
 }
 
-function dodajOsobljeIzBaze(osobljeJson){
-    for (var i = 0; i < osobljeJson.length; i++){
+function dodajOsobljeIzBaze(osobljeJson) {
+    for (var i = 0; i < osobljeJson.length; i++) {
         var osobljeSelect = document.getElementById("osoblje");
         var option = document.createElement("option");
         option.value = osobljeJson[i].ime + " " + osobljeJson[i].prezime + " " + osobljeJson[i].uloga;

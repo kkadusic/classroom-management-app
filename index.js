@@ -344,14 +344,12 @@ app.get('/zauzeca.json', (req, res) => {
 
 
 function validirajNaServeru(zauzecaJson, novoZauzece) {
-    //console.log("SVA ZAUZECA: " + JSON.stringify(zauzecaJson));
     if (Object.keys(novoZauzece).length === 6) { // novoZauzece je periodicno
         for (var i = 0; i < zauzecaJson.periodicna.length; i++) {
             if (novoZauzece.naziv === zauzecaJson.periodicna[i].naziv &&
                 novoZauzece.semestar === zauzecaJson.periodicna[i].semestar &&
                 novoZauzece.dan === zauzecaJson.periodicna[i].dan &&
                 (novoZauzece.pocetak < zauzecaJson.periodicna[i].kraj) && (zauzecaJson.periodicna[i].pocetak < novoZauzece.kraj)) {
-                console.log("nesto2---->" + zauzecaJson.periodicna[i].predavac);
                 return zauzecaJson.periodicna[i].predavac;
             }
             // Provjera preklapanja periodicnog-novoZauzece zauzeca sa vanrednim
@@ -424,7 +422,6 @@ app.post('/rezervacija.html', function (req, res) {
 
 function formirajDatum(){
     let danas = new Date();
-
     let sati = danas.getHours();
     let minute = danas.getMinutes();
     if (sati.toString().length === 1)
@@ -432,20 +429,16 @@ function formirajDatum(){
     if (minute.toString().length === 1)
         minute = "0" + minute;
     let vrijeme = sati + ":" + minute + ":00";
-
     let indeksDana = (danas.getDay() + 6) % 7;
     let mjesec = danas.getMonth() + 1;
     if (mjesec.toString().length === 1)
         mjesec = "0" + mjesec;
-
     let dan = danas.getDate().toString();
     if (dan.toString().length === 1){
         dan = "0" + dan;
     }
-
     let datum = "";
     datum = dan + "." + mjesec + "." + danas.getFullYear();
-
     return {
         indeksDana: indeksDana,
         vrijeme: vrijeme,
@@ -477,6 +470,7 @@ app.get('/osobljeSala', function(req, res) {
                                     prezime: osobe[i].prezime,
                                     sala: sala[rez[j].sala - 1].naziv
                                 };
+
                                 let kontrola1 = false;
                                 for(let k = 0; k < listaOsoblja.length; ++k) {
                                     kontrola = false;

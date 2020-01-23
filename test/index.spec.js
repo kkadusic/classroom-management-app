@@ -188,9 +188,17 @@ describe("GET /sale", function () {
         supertest(app)
             .get("/sale")
             .expect(function (res) {
-                res.body = [{"id":1,"naziv":"1-11","zaduzenaOsoba":1},{"id":2,"naziv":"1-15","zaduzenaOsoba":2}];
+                res.body = [{"id": 1, "naziv": "1-11", "zaduzenaOsoba": 1}, {
+                    "id": 2,
+                    "naziv": "1-15",
+                    "zaduzenaOsoba": 2
+                }];
             })
-            .expect(200, [{"id":1,"naziv":"1-11","zaduzenaOsoba":1},{"id":2,"naziv":"1-15","zaduzenaOsoba":2}], done);
+            .expect(200, [{"id": 1, "naziv": "1-11", "zaduzenaOsoba": 1}, {
+                "id": 2,
+                "naziv": "1-15",
+                "zaduzenaOsoba": 2
+            }], done);
     });
 });
 
@@ -199,10 +207,40 @@ describe("GET /zauzecea", function () {
         supertest(app)
             .get("/zauzeca.json")
             .expect(function (res) {
-                res.body = {"periodicna":[{"dan":0,"semestar":"zimski","pocetak":"13:00:00","kraj":"14:00:00","naziv":"1-11","predavac":"Test Test asistent"}],
-                    "vanredna":[{"datum":"01.01.2020","pocetak":"12:00:00","kraj":"13:00:00","naziv":"1-11","predavac":"Neko Nekić profesor"}]}
+                res.body = {
+                    "periodicna": [{
+                        "dan": 0,
+                        "semestar": "zimski",
+                        "pocetak": "13:00:00",
+                        "kraj": "14:00:00",
+                        "naziv": "1-11",
+                        "predavac": "Test Test asistent"
+                    }],
+                    "vanredna": [{
+                        "datum": "01.01.2020",
+                        "pocetak": "12:00:00",
+                        "kraj": "13:00:00",
+                        "naziv": "1-11",
+                        "predavac": "Neko Nekić profesor"
+                    }]
+                }
             })
-            .expect(200, {"periodicna":[{"dan":0,"semestar":"zimski","pocetak":"13:00:00","kraj":"14:00:00","naziv":"1-11","predavac":"Test Test asistent"}],
-                "vanredna":[{"datum":"01.01.2020","pocetak":"12:00:00","kraj":"13:00:00","naziv":"1-11","predavac":"Neko Nekić profesor"}]}, done);
+            .expect(200, {
+                "periodicna": [{
+                    "dan": 0,
+                    "semestar": "zimski",
+                    "pocetak": "13:00:00",
+                    "kraj": "14:00:00",
+                    "naziv": "1-11",
+                    "predavac": "Test Test asistent"
+                }],
+                "vanredna": [{
+                    "datum": "01.01.2020",
+                    "pocetak": "12:00:00",
+                    "kraj": "13:00:00",
+                    "naziv": "1-11",
+                    "predavac": "Neko Nekić profesor"
+                }]
+            }, done);
     });
 });

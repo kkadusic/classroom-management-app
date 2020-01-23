@@ -278,7 +278,7 @@ app.get('/zauzeca.json', (req, res) => {
     let terminiListaPromisea = [];
     let rezervacijeListaPromisea = [];
 
-    new Promise(function(resolve){
+    new Promise(function (resolve) {
         rezervacijeListaPromisea.push(db.rezervacija.findAll().then(function (rezervacije) {
             for (let i = 0; i < rezervacije.length; i++) {
                 terminiListaPromisea.push(db.termin.findOne({
@@ -319,7 +319,7 @@ app.get('/zauzeca.json', (req, res) => {
 
                         }));
 
-                        if (i === rezervacije.length - 1){
+                        if (i === rezervacije.length - 1) {
                             Promise.all(osobljeListaPromisea).then(function (o) {
                                 resolve(o);
                             }).catch(function (err) {
@@ -420,7 +420,7 @@ app.post('/rezervacija.html', function (req, res) {
     }
 });
 
-function formirajDatum(){
+function formirajDatum() {
     let danas = new Date();
     let sati = danas.getHours();
     let minute = danas.getMinutes();
@@ -434,7 +434,7 @@ function formirajDatum(){
     if (mjesec.toString().length === 1)
         mjesec = "0" + mjesec;
     let dan = danas.getDate().toString();
-    if (dan.toString().length === 1){
+    if (dan.toString().length === 1) {
         dan = "0" + dan;
     }
     let datum = "";
@@ -446,22 +446,22 @@ function formirajDatum(){
     };
 }
 
-app.get('/osobljeSala', function(req, res) {
+app.get('/osobljeSala', function (req, res) {
     let podaci = formirajDatum();
     let indeksDana = podaci.indeksDana;
     let vrijeme = podaci.vrijeme;
     let datum = podaci.datum;
     let listaOsoblja = [];
 
-    db.osoblje.findAll().then(function(osobe) {
-        db.rezervacija.findAll().then(function(rez) {
-            db.termin.findAll().then(function(ter) {
-                db.sala.findAll().then(function(sala) {
+    db.osoblje.findAll().then(function (osobe) {
+        db.rezervacija.findAll().then(function (rez) {
+            db.termin.findAll().then(function (ter) {
+                db.sala.findAll().then(function (sala) {
                     let kontrola = false;
-                    for(let i = 0; i < osobe.length; i++) {
+                    for (let i = 0; i < osobe.length; i++) {
                         kontrola = false;
-                        for(let j = 0; j < rez.length; j++) {
-                            if(osobe[i].id === rez[j].osoba && rez[j].termin === ter[rez[j].termin - 1].id &&
+                        for (let j = 0; j < rez.length; j++) {
+                            if (osobe[i].id === rez[j].osoba && rez[j].termin === ter[rez[j].termin - 1].id &&
                                 ter[rez[j].termin - 1].pocetak < vrijeme && ter[rez[j].termin - 1].kraj > vrijeme
                                 && (ter[rez[j].termin - 1].datum === datum || ter[rez[j].termin - 1].dan === indeksDana)) {
 
@@ -472,21 +472,21 @@ app.get('/osobljeSala', function(req, res) {
                                 };
 
                                 let kontrola1 = false;
-                                for(let k = 0; k < listaOsoblja.length; ++k) {
+                                for (let k = 0; k < listaOsoblja.length; ++k) {
                                     kontrola = false;
-                                    if(uposlenik.ime === listaOsoblja[k].ime && uposlenik.prezime === listaOsoblja[k].prezime) {
+                                    if (uposlenik.ime === listaOsoblja[k].ime && uposlenik.prezime === listaOsoblja[k].prezime) {
                                         kontrola1 = true;
                                         break;
                                     }
                                 }
-                                if(!kontrola1) {
+                                if (!kontrola1) {
                                     listaOsoblja.push(uposlenik);
                                 }
                                 kontrola = true;
                                 break;
                             }
                         }
-                        if(!kontrola) {
+                        if (!kontrola) {
                             let uposlenik = {
                                 ime: osobe[i].ime,
                                 prezime: osobe[i].prezime,
@@ -501,9 +501,6 @@ app.get('/osobljeSala', function(req, res) {
         });
     });
 });
-
-
-
 
 
 app.get('/slika1.jpg', (req, res) => {

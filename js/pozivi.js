@@ -1,8 +1,5 @@
 let Pozivi = (function(){
 
-    let periodicna = [];
-    let vanredna = [];
-
     function ucitajOsobljeIzBazeImpl(){
         console.log("ucitajOsobljeIzBaze");
         let ajax = new XMLHttpRequest();
@@ -16,28 +13,17 @@ let Pozivi = (function(){
         ajax.send();
     }
 
-    function ucitajListuOsobljaSaBazeImpl(){
-        /*let ajax = new XMLHttpRequest();
-        ajax.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200) {
-                let osobljeJson = JSON.parse(this.responseText);
-                dodajListuOsobljaIzBaze(osobljeJson);
-            }
-        };
-        ajax.open("GET", "/osoblje", true);
-        ajax.send();*/
-    }
-
-    function ucitajUEjsImpl(){
+    function ucitajOsobljeSaTrenutnimSalamaImpl(){
         let ajax = new XMLHttpRequest();
         ajax.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
-
+                prikaziOsobljeSaTrenutnimSalamaNaStranici(JSON.parse(this.responseText));
             }
         };
-        ajax.open("GET", "/osoblje.html", true);
+        ajax.open("GET", "/osobljeSala", true);
         ajax.send();
     }
+
 
     function ucitajJsonZauzecaImpl(iscrtaj) {
         console.log("ucitajJSonZauzeca");
@@ -45,15 +31,9 @@ let Pozivi = (function(){
         ajax.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 let zauzecaJson = JSON.parse(this.responseText);
-                for (var i = 0; i < zauzecaJson.periodicna.length; i++)
-                    periodicna.push(zauzecaJson.periodicna[i]);
-                for (var i = 0; i < zauzecaJson.vanredna.length; i++)
-                    vanredna.push(zauzecaJson.vanredna[i]);
-                Kalendar.ucitajPodatke(periodicna, vanredna);
+                Kalendar.ucitajPodatke(zauzecaJson.periodicna, zauzecaJson.vanredna);
                 if (iscrtaj === true)
                     Kalendar.iscrtajKalendar(document.getElementById("kalendarDatum"), Kalendar.dajMjesec());
-                trenutnoVrijemeRezervacija();
-                ucitajUEjsImpl();
             }
         };
         ajax.open("GET", "../zauzeca.json", true);
@@ -66,19 +46,15 @@ let Pozivi = (function(){
         ajax.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 let zauzecaJson = JSON.parse(this.responseText);
-                console.log("ucitajObocji-ZAUZECAJSON: " + JSON.stringify(zauzecaJson));
-                for (var i = 0; i < zauzecaJson.periodicna.length; i++)
-                    periodicna.push(zauzecaJson.periodicna[i]);
-                for (var i = 0; i < zauzecaJson.vanredna.length; i++)
-                    vanredna.push(zauzecaJson.vanredna[i]);
                 document.getElementById("kalendarDatum").innerHTML = "";
-                Kalendar.ucitajPodatke(periodicna, vanredna);
+                Kalendar.ucitajPodatke(zauzecaJson.periodicna, zauzecaJson.vanredna);
                 Kalendar.iscrtajKalendar(document.getElementById("kalendarDatum"), Kalendar.dajMjesec());
                 Kalendar.obojiZauzeca(document.getElementById("kalendarMjesec"), Kalendar.dajMjesec(), sala, per, poc, kraj);
             }
         };
         ajax.open("GET", "../zauzeca.json", true);
         ajax.send();
+
     }
 
     function dodajPeriodicnoZauzeceImpl(dan, semestar, pocetak, kraj, naziv, predavac){
@@ -168,8 +144,7 @@ let Pozivi = (function(){
         dodajVanrednoZauzece: dodajVanrednoZauzeceImpl,
         ucitajSlike: ucitajSlikeImpl,
         ucitajOsobljeIzBaze: ucitajOsobljeIzBazeImpl,
-        ucitajListuOsobljaSaBaze: ucitajListuOsobljaSaBazeImpl,
-        ucitajUEjs: ucitajUEjsImpl
+        ucitajOsobljeSaTrenutnimSalama: ucitajOsobljeSaTrenutnimSalamaImpl
     }
 
 }());

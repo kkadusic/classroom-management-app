@@ -20,7 +20,7 @@ module.exports = function(sequelize) {
             allowNull: true,
         },
         semestar: {
-            type: Sequelize.STRING, // todo provjeriti da li da ostane string
+            type: Sequelize.STRING,
             allowNull: true,
         },
         pocetak: {

@@ -4,19 +4,6 @@ const fs = require('fs');
 const app = express();
 const path = require('path');
 const db = require('./db.js');
-var mysql = require('mysql2');
-
-var con = mysql.createConnection({
-    host: "127.0.0.1",
-    user: "root",
-    password: "root",
-    database: "DBWT19"
-});
-
-con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected to database!");
-});
 
 
 app.use('/css', express.static(path.join(__dirname + '/css')));
@@ -33,63 +20,113 @@ db.sequelize.sync({
     force: true
 }).then(function () {
     inicijalizacija().then(function () {
-        console.log("Zavrseno kreiranje tabela i ubacivanje pocetnih podataka!");
+        console.log("Zavrseno kreiranje tabela i ubacivanje pocetnih podataka.");
     });
 });
 
 function inicijalizacija() {
-    return new Promise(function () {
-        db.osoblje.create({
+    let osobljeListaPromisea = [];
+    let saleListaPromisea = [];
+    let terminiListaPromisea = [];
+    let rezervacijeListaPromisea = [];
+    return new Promise(function (resolve) {
+        // todo ubacuje po redu?
+        osobljeListaPromisea.push(db.osoblje.create({
             ime: 'Neko',
-            prezime: 'Nekic',
+            prezime: 'Nekić',
             uloga: 'profesor'
-        });
-        db.osoblje.create({
+        }));
+        osobljeListaPromisea.push(db.osoblje.create({
             ime: 'Drugi',
             prezime: 'Neko',
             uloga: 'asistent'
-        });
-        db.osoblje.create({
+        }));
+        osobljeListaPromisea.push(db.osoblje.create({
             ime: 'Test',
             prezime: 'Test',
             uloga: 'asistent'
-        });
+        }));
 
-        db.termin.create({
-            redovni: false,
-            dan: null,
-            datum: '01.01.2020',
-            semestar: null,
-            pocetak: '12:00',
-            kraj: '13:00'
-        });
-        db.termin.create({
-            redovni: true,
-            dan: 0,
-            datum: null,
-            semestar: 'zimski',
-            pocetak: '13:00',
-            kraj: '12:00'
-        });
+        Promise.all(osobljeListaPromisea).then(function (osoblje) {
+            let nekoNekic = osoblje.filter(function (osoba) {
+                return osoba.ime === 'Neko' && osoba.prezime === 'Nekić' && osoba.uloga === 'profesor'
+            })[0];
+            let drugiNeko = osoblje.filter(function (osoba) {
+                return osoba.ime === 'Drugi' && osoba.prezime === 'Neko' && osoba.uloga === 'asistent'
+            })[0];
+            let testTest = osoblje.filter(function (osoba) {
+                return osoba.ime === 'Test' && osoba.prezime === 'Test' && osoba.uloga === 'asistent'
+            })[0];
 
-        db.sala.create({
-            naziv: '1-11',
-            zaduzenaOsoba: 1
-        });
-        db.sala.create({
-            naziv: '1-15',
-            zaduzenaOsoba: 2
-        });
+            saleListaPromisea.push(db.sala.create({
+                naziv: '1-11',
+                zaduzenaOsoba: nekoNekic.id
+            }));
+            saleListaPromisea.push(db.sala.create({
+                naziv: '1-15',
+                zaduzenaOsoba: drugiNeko.id
+            }));
 
-        db.rezervacija.create({
-            termin: 1,
-            sala: 1,
-            osoba: 1
-        });
-        db.rezervacija.create({
-            termin: 2,
-            sala: 1,
-            osoba: 3
+            Promise.all(saleListaPromisea).then(function (sale) {
+                let sala1_11 = sale.filter(function (sala) {
+                    return sala.naziv === '1-11' && sala.zaduzenaOsoba === 1
+                })[0];
+                let sala1_15 = sale.filter(function (a) {
+                    return a.naziv === '1-15' && a.zaduzenaOsoba === 2
+                })[0];
+
+                terminiListaPromisea.push(db.termin.create({
+                    redovni: false,
+                    dan: null,
+                    datum: '01.01.2020',
+                    semestar: null,
+                    pocetak: '12:00',
+                    kraj: '13:00'
+                }));
+                terminiListaPromisea.push(db.termin.create({
+                    redovni: true,
+                    dan: 0,
+                    datum: null,
+                    semestar: 'zimski',
+                    pocetak: '13:00',
+                    kraj: '14:00'
+                }));
+
+                Promise.all(terminiListaPromisea).then(function (termini) {
+                    let termin1 = termini.filter(function (termin) {
+                        return termin.redovni === false && termin.dan === null && termin.datum === '01.01.2020'
+                            && termin.semestar === null && termin.pocetak === '12:00' && termin.kraj === '13:00'
+                    })[0];
+                    let termin2 = termini.filter(function (termin) {
+                        return termin.redovni === true && termin.dan === 0 && termin.datum === null
+                            && termin.semestar === 'zimski' && termin.pocetak === '13:00' && termin.kraj === '14:00'
+                    })[0];
+
+                    rezervacijeListaPromisea.push(db.rezervacija.create({
+                        termin: termin1.id,
+                        sala: sala1_11.id,
+                        osoba: nekoNekic.id
+                    }));
+
+                    rezervacijeListaPromisea.push(db.rezervacija.create({
+                        termin: termin2.id,
+                        sala: sala1_11.id,
+                        osoba: testTest.id
+                    }));
+
+                    Promise.all(rezervacijeListaPromisea).then(function (r) {
+                        resolve(r);
+                    }).catch(function (err) {
+                        console.log("Rezervacije greska: " + err);
+                    });
+                }).catch(function (err) {
+                    console.log("Termini greska: " + err);
+                });
+            }).catch(function (err) {
+                console.log("Sale greska: " + err);
+            });
+        }).catch(function (err) {
+            console.log("Osoblje greska: " + err);
         });
     });
 }
@@ -115,145 +152,193 @@ app.get('/unos.html', (req, res) => {
     res.sendFile(path.join(__dirname, '/html/unos.html'));
 });
 
-/*
 app.get('/osoblje.html', (req, res) => {
     res.sendFile(path.join(__dirname, '/html/osoblje.html'));
 });
- */
+
+
+// todo eventualno vratiti na jednostavniju verziju
+function dodajZauzeceUBazu(novoZauzece) {
+    let jelRedovno = true;
+    if (Object.keys(novoZauzece).length === 5)
+        jelRedovno = false;
+    var predavacUloga = novoZauzece.predavac.split(' ');
+
+    let osobljeListaPromisea = [];
+    let saleListaPromisea = [];
+    let terminiListaPromisea = [];
+    let rezervacijeListaPromisea = [];
+    return new Promise(function (resolve) {
+        osobljeListaPromisea.push(db.osoblje.findOne({
+            where: {
+                ime: predavacUloga[0],
+                prezime: predavacUloga[1],
+                uloga: predavacUloga[2]
+            }
+        }));
+
+        Promise.all(osobljeListaPromisea).then(function (osoblje) {
+            let nekoNekic = osoblje.filter(function (osoba) {
+                return osoba.ime === predavacUloga[0] && osoba.prezime === predavacUloga[1] && osoba.uloga === predavacUloga[2]
+            })[0];
+
+            saleListaPromisea.push(db.sala.create({
+                naziv: novoZauzece.naziv,
+                zaduzenaOsoba: nekoNekic.id
+            }));
+
+            Promise.all(saleListaPromisea).then(function (sale) {
+                let sala1_11 = sale.filter(function (sala) {
+                    return sala.naziv === novoZauzece.naziv && sala.zaduzenaOsoba === nekoNekic.id
+                })[0];
+
+                terminiListaPromisea.push(db.termin.create({
+                    redovni: jelRedovno,
+                    dan: novoZauzece.dan,
+                    datum: novoZauzece.datum,
+                    semestar: novoZauzece.semestar,
+                    pocetak: novoZauzece.pocetak,
+                    kraj: novoZauzece.kraj
+                }));
+
+                Promise.all(terminiListaPromisea).then(function (termini) {
+                    let termin1 = termini.filter(function (termin) {
+                        return termin.redovni === jelRedovno && termin.dan === novoZauzece.dan && termin.datum === novoZauzece.datum
+                            && termin.semestar === novoZauzece.semestar && termin.pocetak === novoZauzece.pocetak && termin.kraj === novoZauzece.kraj
+                    })[0];
+
+                    rezervacijeListaPromisea.push(db.rezervacija.create({
+                        termin: termin1.id,
+                        sala: sala1_11.id,
+                        osoba: nekoNekic.id
+                    }));
+
+                    Promise.all(rezervacijeListaPromisea).then(function (r) {
+                        resolve(r);
+                    }).catch(function (err) {
+                        console.log("Rezervacije greska: " + err);
+                    });
+                }).catch(function (err) {
+                    console.log("Termini greska: " + err);
+                });
+            }).catch(function (err) {
+                console.log("Sale greska: " + err);
+            });
+        }).catch(function (err) {
+            console.log("Osoblje greska: " + err);
+        });
+    });
+}
 
 
 app.get('/osoblje', (req, res) => {
-    var osoblje = [];
-    db.osoblje.findAll().then(function (podaci) {
-        for (var i = 0; i < podaci.length; i++) {
-            var osoba = {
-                id: podaci[i].id,
-                ime: podaci[i].ime,
-                prezime: podaci[i].prezime,
-                uloga: podaci[i].uloga
+    let listaOsoblja = [];
+    db.osoblje.findAll().then(function (osoblje) {
+        for (var i = 0; i < osoblje.length; i++) {
+            let osoba = {
+                id: osoblje[i].id,
+                ime: osoblje[i].ime,
+                prezime: osoblje[i].prezime,
+                uloga: osoblje[i].uloga
             };
-            osoblje.push(osoba);
+            listaOsoblja.push(osoba);
         }
         res.writeHead(200, {"Content-Type": "application/json"});
-        res.end(JSON.stringify(osoblje));
+        res.end(JSON.stringify(listaOsoblja));
     });
 });
 
-function provjeriVrijeme(zauzeca){
-    var danas = new Date();
-    let vrijeme = danas.getHours() + ":" + danas.getMinutes();
-    let indeksDana = (danas.getDay() + 6) % 7;
-    let mjesec = Kalendar.dajMjesec() + 1;
-    let dan = danas.getDate().toString();
-    if (dan.toString().length === 1){
-        dan = "0" + dan;
-    }
-    let datum = "";
-    if (mjesec.toString().length === 1)
-        datum = dan + ".0" + mjesec + "." + Kalendar.dajGodinu();
-    else
-        datum = dan + "." + mjesec + "." + Kalendar.dajGodinu();
-    //let datumObjekat = new Date(Kalendar.dajGodinu(), mjesec-1, parseInt(dan, 10));
-    console.log("WWWWWWWWW->" + Kalendar.dajPeriodicnaZauzeca().length);
-}
 
-app.get('/osoblje.html', (req, res) => {
-    console.log("GETT");
-    console.log(JSON.stringify(zauzeca));
 
-    var sql = "SELECT o.ime, o.prezime, o.uloga, s.naziv " +
-        "FROM osoblje o LEFT JOIN sala s " +
-        "ON s.zaduzenaOsoba = o.id";
-    con.query(sql, function(err, result) {
-        if (err) throw err;
-        res.render(path.join(__dirname, '/html/nesto.ejs'), {
-            redovi: result
-        });
-    });
-});
 
 let zauzeca = {
     periodicna: [],
     vanredna: []
 };
-let osobaPodaci = [];
 
 app.get('/zauzeca.json', (req, res) => {
-    console.log("GET zauzeca");
     let periodicna = [];
     let vanredna = [];
-    db.rezervacija.findAll().then(function (rezervacije) {
-        //console.log("REZERVACIJE: " + JSON.stringify(rezervacije));
+    let osobljeListaPromisea = [];
+    let saleListaPromisea = [];
+    let terminiListaPromisea = [];
+    let rezervacijeListaPromisea = [];
+
+    new Promise(function(resolve){
+        rezervacijeListaPromisea.push(db.rezervacija.findAll().then(function (rezervacije) {
             for (let i = 0; i < rezervacije.length; i++) {
-                db.termin.findOne({
+                terminiListaPromisea.push(db.termin.findOne({
                     where: {
                         id: rezervacije[i].termin
                     }
                 }).then(function (termin) {
-                    db.sala.findOne({
+                    saleListaPromisea.push(db.sala.findOne({
                         where: {
                             id: rezervacije[i].sala
                         }
                     }).then(function (sala) {
-                        db.osoblje.findOne({
+                        osobljeListaPromisea.push(db.osoblje.findOne({
                             where: {
                                 id: rezervacije[i].osoba
                             }
                         }).then(function (osoba) {
-                            osobaPodaci = osoba;
-                            if (termin.redovni === true){
+                            if (termin.redovni === true) {
                                 let p = {
                                     dan: termin.dan,
                                     semestar: termin.semestar,
                                     pocetak: termin.pocetak,
                                     kraj: termin.kraj,
                                     naziv: sala.naziv,
-                                    predavac: osoba.naziv
+                                    predavac: osoba.ime + " " + osoba.prezime + " " + osoba.uloga
                                 };
                                 periodicna.push(p);
-                            }
-                            else {
+                            } else {
                                 let v = {
                                     datum: termin.datum,
                                     pocetak: termin.pocetak,
                                     kraj: termin.kraj,
                                     naziv: sala.naziv,
-                                    predavac: osoba.naziv
+                                    predavac: osoba.ime + " " + osoba.prezime + " " + osoba.uloga
                                 };
                                 vanredna.push(v);
                             }
-                        });
-                    });
-                });
+
+                        }));
+
+                        if (i === rezervacije.length - 1){
+                            Promise.all(osobljeListaPromisea).then(function (o) {
+                                resolve(o);
+                            }).catch(function (err) {
+                                console.log("Osoblje greska: " + err);
+                            });
+                        }
+
+                    }));
+                }));
             }
-        });
-
-    zauzeca = {
-        periodicna: periodicna,
-        vanredna: vanredna
-    };
-
-    setTimeout(function () {
-        //console.log("vanredna: " + JSON.stringify(vanredna));
-        //console.log("redovna: " + JSON.stringify(periodicna));
-        //console.log("SVA ZAUZECA: " + JSON.stringify(zauzeca));
+        }))
+    }).then(function () {
+        zauzeca = {
+            periodicna: periodicna,
+            vanredna: vanredna
+        };
+        //console.log("ZAUZECA: " + JSON.stringify(zauzeca));
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end(JSON.stringify(zauzeca));
-    }, 100);
+    });
 });
 
 
 function validirajNaServeru(zauzecaJson, novoZauzece) {
+    //console.log("SVA ZAUZECA: " + JSON.stringify(zauzecaJson));
     if (Object.keys(novoZauzece).length === 6) { // novoZauzece je periodicno
         for (var i = 0; i < zauzecaJson.periodicna.length; i++) {
-            if (JSON.stringify(zauzecaJson.periodicna[i]) === JSON.stringify(novoZauzece)) {
-                return false;
-            }
             if (novoZauzece.naziv === zauzecaJson.periodicna[i].naziv &&
                 novoZauzece.semestar === zauzecaJson.periodicna[i].semestar &&
                 novoZauzece.dan === zauzecaJson.periodicna[i].dan &&
                 (novoZauzece.pocetak < zauzecaJson.periodicna[i].kraj) && (zauzecaJson.periodicna[i].pocetak < novoZauzece.kraj)) {
-                return false;
+                console.log("nesto2---->" + zauzecaJson.periodicna[i].predavac);
+                return zauzecaJson.periodicna[i].predavac;
             }
             // Provjera preklapanja periodicnog-novoZauzece zauzeca sa vanrednim
             for (var i = 0; i < zauzecaJson.vanredna.length; i++) {
@@ -270,7 +355,7 @@ function validirajNaServeru(zauzecaJson, novoZauzece) {
                 if (semestarVanrednog === novoZauzece.semestar && indeksDana === novoZauzece.dan &&
                     novoZauzece.pocetak < zauzecaJson.vanredna[i].kraj && zauzecaJson.vanredna[i].pocetak < novoZauzece.kraj &&
                     novoZauzece.naziv === zauzecaJson.vanredna[i].naziv) {
-                    return false;
+                    return zauzecaJson.vanredna[i].predavac;
                 }
             }
         }
@@ -287,13 +372,10 @@ function validirajNaServeru(zauzecaJson, novoZauzece) {
             semestarVanrednog = "ljetni";
 
         for (var i = 0; i < zauzecaJson.vanredna.length; i++) {
-            if (JSON.stringify(zauzecaJson.vanredna[i]) === JSON.stringify(novoZauzece)) {
-                return false;
-            }
             if (novoZauzece.naziv === zauzecaJson.vanredna[i].naziv &&
                 novoZauzece.datum === zauzecaJson.vanredna[i].datum &&
                 (novoZauzece.pocetak < zauzecaJson.vanredna[i].kraj) && (zauzecaJson.vanredna[i].pocetak < novoZauzece.kraj)) {
-                return false;
+                return zauzecaJson.vanredna[i].predavac;
             }
         }
         // Provjera preklapanja vanrednog-novoZauzece zauzeca sa periodicnim
@@ -301,7 +383,7 @@ function validirajNaServeru(zauzecaJson, novoZauzece) {
             if (semestarVanrednog === zauzecaJson.periodicna[i].semestar && indeksDana === zauzecaJson.periodicna[i].dan &&
                 novoZauzece.pocetak < zauzecaJson.periodicna[i].kraj && zauzecaJson.periodicna[i].pocetak < novoZauzece.kraj &&
                 novoZauzece.naziv === zauzecaJson.periodicna[i].naziv) {
-                return false;
+                return zauzecaJson.periodicna[i].predavac;
             }
         }
     }
@@ -309,65 +391,127 @@ function validirajNaServeru(zauzecaJson, novoZauzece) {
 }
 
 
-function dodajZauzeceUBazu(novoZauzece) {
-    //console.log("DODAJ zauzece u bazu");
-    let jelRedovno = true;
-    if (Object.keys(novoZauzece).length === 5)
-        jelRedovno = false;
-
-    var predavacUloga = novoZauzece.predavac.split(' ');
-    return new Promise(function () {
-        try {
-            db.termin.create({
-                redovni: jelRedovno,
-                dan: novoZauzece.dan,
-                datum: novoZauzece.datum,
-                semestar: novoZauzece.semestar,
-                pocetak: novoZauzece.pocetak,
-                kraj: novoZauzece.kraj
-            }).then(function (termin) {
-                db.osoblje.findOne({
-                    where: {
-                        ime: predavacUloga[0],
-                        prezime: predavacUloga[1],
-                        uloga: predavacUloga[2]
-                    }
-                }).then(function (osoba) {
-                    db.sala.create({
-                        naziv: novoZauzece.naziv,
-                        zaduzenaOsoba: osoba.id
-                    }).then(function (sala) {
-                        db.rezervacija.create({
-                            termin: termin.id,
-                            sala: sala.id,
-                            osoba: osoba.id
-                        });
-                    });
-
-                });
-            });
-        } catch (e) {
-            console.log(e);
-        }
-    });
-}
-
 app.post('/rezervacija.html', function (req, res) {
-    console.log("POST zauzeca");
     let novoZauzece = req.body;
-    if (validirajNaServeru(zauzeca, novoZauzece) === true) {
-        if (Object.keys(novoZauzece).length === 6) {    // PERIODICNO ZAUZECE
-            dodajZauzeceUBazu(novoZauzece);
-        } else {                                          // VANREDNO ZAUZECE
-            dodajZauzeceUBazu(novoZauzece);
-        }
+    let odgovor = validirajNaServeru(zauzeca, novoZauzece);
+    if (odgovor === true) {
+        dodajZauzeceUBazu(novoZauzece);
         res.send("Uspjesno upisano");
-    }
-    else {
-        // todo da pravu osobu nadje
-        res.send(JSON.stringify(osobaPodaci));
+    } else {
+        let osobaPodaci = odgovor.split(' ');
+        let osoba = {
+            ime: osobaPodaci[0],
+            prezime: osobaPodaci[1],
+            uloga: osobaPodaci[2]
+        };
+        res.send(JSON.stringify(osoba));
     }
 });
+
+function formirajDatum(){
+    let danas = new Date();
+
+    let sati = danas.getHours();
+    let minute = danas.getMinutes();
+    if (sati.toString().length === 1)
+        sati = "0" + sati;
+    if (minute.toString().length === 1)
+        minute = "0" + minute;
+    let vrijeme = sati + ":" + minute + ":00";
+
+    let indeksDana = (danas.getDay() + 6) % 7;
+    let mjesec = danas.getMonth() + 1;
+    if (mjesec.toString().length === 1)
+        mjesec = "0" + mjesec;
+
+    let dan = danas.getDate().toString();
+    if (dan.toString().length === 1){
+        dan = "0" + dan;
+    }
+
+    let datum = "";
+    datum = dan + "." + mjesec + "." + danas.getFullYear();
+
+    return {
+        indeksDana: indeksDana,
+        vrijeme: vrijeme,
+        datum: datum
+    };
+}
+
+app.get('/osobljeSala', function(req, res) {
+    let podaci = formirajDatum();
+    let indeksDana = podaci.indeksDana;
+    let vrijeme = podaci.vrijeme;
+    let datum = podaci.datum;
+    let listaOsoblja = [];
+
+    db.osoblje.findAll().then(function(osobe) {
+        db.rezervacija.findAll().then(function(rez) {
+            db.termin.findAll().then(function(ter) {
+                db.sala.findAll().then(function(sala) {
+                    let kontrola = false;
+                    for(let i = 0; i < osobe.length; i++) {
+                        kontrola = false;
+                        for(let j = 0; j < rez.length; j++) {
+
+                            /*
+                            console.log("ITERACIJA ---------------------");
+                            console.log(osobe[i].id);
+                            console.log(rez[j].osoba);
+                            console.log(rez[j].termin);
+                            console.log(ter[rez[j].termin - 1].id);
+                            console.log((ter[rez[j].termin - 1]).pocetak);
+                            console.log(ter[rez[j].termin - 1].kraj);
+                            console.log(vrijeme);
+                            console.log(ter[rez[j].termin - 1].datum);
+                            console.log(ter[rez[j].termin - 1].dan);
+                            console.log(datum);
+                            console.log(indeksDana);
+                             */
+
+                            if(osobe[i].id === rez[j].osoba && rez[j].termin === ter[rez[j].termin - 1].id &&
+                                ter[rez[j].termin - 1].pocetak < vrijeme && ter[rez[j].termin - 1].kraj > vrijeme
+                                && (ter[rez[j].termin - 1].datum === datum || ter[rez[j].termin - 1].dan === indeksDana)) {
+
+                                let uposlenik = {
+                                    ime: osobe[i].ime,
+                                    prezime: osobe[i].prezime,
+                                    sala: sala[rez[j].sala - 1].naziv
+                                };
+                                let kontrola1 = false;
+                                for(let k = 0; k < listaOsoblja.length; ++k) {
+                                    kontrola = false;
+                                    if(uposlenik.ime === listaOsoblja[k].ime && uposlenik.prezime === listaOsoblja[k].prezime) {
+                                        kontrola1 = true;
+                                        break;
+                                    }
+                                }
+                                if(!kontrola1) {
+                                    listaOsoblja.push(uposlenik);
+                                }
+                                kontrola = true;
+                                break;
+                            }
+                        }
+                        if(!kontrola) {
+                            let uposlenik = {
+                                ime: osobe[i].ime,
+                                prezime: osobe[i].prezime,
+                                sala: "u kancelariji"
+                            };
+                            listaOsoblja.push(uposlenik);
+                        }
+                    }
+                    res.send(listaOsoblja);
+                });
+            });
+        });
+    });
+});
+
+
+
 
 
 app.get('/slika1.jpg', (req, res) => {
@@ -505,5 +649,5 @@ app.get('/slike4', (req, res) => {
 });
 
 app.listen(8080, function () {
-    console.log('Express server na portu 3000');
+    console.log('Express server na portu 3000.');
 });

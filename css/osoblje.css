@@ -1,0 +1,22 @@
+.sadrzaj {
+    background-image: url("../slike/pozadina.png");
+    text-align: center;
+    padding: 120px;
+    margin-top: 10px;
+    border: 1px solid limegreen;
+    font-family: Arial, serif;
+}
+
+
+table, td, tr {
+    margin: 0 auto;
+    border: solid 1px;
+}
+
+
+@media only screen and (max-width: 600px) {
+    ul li {
+        display: block;
+        margin-right: 40px;
+    }
+}

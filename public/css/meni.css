@@ -1,7 +1,7 @@
 .meni {
     text-align: center;
     margin-top: 35px;
-    background-image: url("../slike/pozadina.png");
+    background-image: url("../img/pozadina.png");
     border: 1px solid limegreen;
     font-family: Arial, serif;
 }

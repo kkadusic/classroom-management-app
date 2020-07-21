@@ -10,10 +10,10 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 // Import modela
-db.osoblje = sequelize.import(__dirname + '/modeli/osoblje.js');
-db.rezervacija = sequelize.import(__dirname + '/modeli/rezervacija.js');
-db.termin = sequelize.import(__dirname + '/modeli/termin.js');
-db.sala = sequelize.import(__dirname + '/modeli/sala.js');
+db.osoblje = sequelize.import(__dirname + '/models/osoblje.js');
+db.rezervacija = sequelize.import(__dirname + '/models/rezervacija.js');
+db.termin = sequelize.import(__dirname + '/models/termin.js');
+db.sala = sequelize.import(__dirname + '/models/sala.js');
 
 // Relacije
 db.osoblje.hasMany(db.rezervacija, {

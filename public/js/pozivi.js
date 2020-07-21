@@ -114,24 +114,24 @@ let Pozivi = (function () {
                         // var prvaSlikaBroj = podaci.slika1.toString().replace(/\D/g,'') + ".jpg";
                         // var drugaSlikaBroj = podaci.slika2.toString().replace(/\D/g,'') + ".jpg";
                         // var trecaSlikaBroj = podaci.slika3.toString().replace(/\D/g,'') + ".jpg";
-                        // $(".slike").append('<a href="http://localhost:8080/slika' + prvaSlikaBroj + '"> <img src="'
+                        // $(".img").append('<a href="http://localhost:8080/slika' + prvaSlikaBroj + '"> <img src="'
                         // + podaci.slika1 + '" alt="slika""></a>');
-                        $(".slike").empty();
-                        $(".slike").append('<img src="' + podaci.slika1 + '" alt="slika""></a>');
-                        $(".slike").append('<img src="' + podaci.slika2 + '" alt="slika""></a>');
-                        $(".slike").append('<img src="' + podaci.slika3 + '" alt="slika""></a>');
+                        $(".img").empty();
+                        $(".img").append('<img src="' + podaci.slika1 + '" alt="slika""></a>');
+                        $(".img").append('<img src="' + podaci.slika2 + '" alt="slika""></a>');
+                        $(".img").append('<img src="' + podaci.slika3 + '" alt="slika""></a>');
                     });
                 } else {
                     $(document).ready(function () {
                         // var prvaSlikaBroj = podaci.slika1.toString().replace(/\D/g,'') + ".jpg";
-                        $(".slike").empty();
-                        $(".slike").append('<img src="' + podaci.slika1 + '" alt="slika""></a>');
+                        $(".img").empty();
+                        $(".img").append('<img src="' + podaci.slika1 + '" alt="slika""></a>');
                     });
                 }
             }
         };
         if (dosaoDoKraja === false) {
-            ajax.open("GET", "slike" + setSlikaIndeks, true);
+            ajax.open("GET", "img" + setSlikaIndeks, true);
             ajax.send();
         }
     }

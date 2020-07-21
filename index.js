@@ -3,11 +3,11 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const app = express();
 const path = require('path');
-const db = require('./db.js');
+const db = require('./database/db.js');
 
 
 app.use('/css', express.static(path.join(__dirname + '/css')));
-app.use('/slike', express.static(path.join(__dirname + '/slike')));
+app.use('/img', express.static(path.join(__dirname + '/img')));
 app.use('/js', express.static(path.join(__dirname + '/js')));
 
 app.use(bodyParser.json());
@@ -504,7 +504,7 @@ app.get('/osobljeSala', function (req, res) {
 
 
 app.get('/slika1.jpg', (req, res) => {
-    fs.readFile('slike/sala1.jpg', (err, podaci) => {
+    fs.readFile('img/sala1.jpg', (err, podaci) => {
         if (err) {
             res.writeHead(504, {'Content-Type': 'image/jpg'});
             throw err;
@@ -515,7 +515,7 @@ app.get('/slika1.jpg', (req, res) => {
 });
 
 app.get('/slika2.jpg', (req, res) => {
-    fs.readFile('slike/sala2.jpg', (err, podaci) => {
+    fs.readFile('img/sala2.jpg', (err, podaci) => {
         if (err) {
             res.writeHead(504, {'Content-Type': 'image/jpg'});
             throw err;
@@ -526,7 +526,7 @@ app.get('/slika2.jpg', (req, res) => {
 });
 
 app.get('/slika3.jpg', (req, res) => {
-    fs.readFile('slike/sala3.jpg', (err, podaci) => {
+    fs.readFile('img/sala3.jpg', (err, podaci) => {
         if (err) {
             res.writeHead(504, {'Content-Type': 'image/jpg'});
             throw err;
@@ -537,7 +537,7 @@ app.get('/slika3.jpg', (req, res) => {
 });
 
 app.get('/slika4.jpg', (req, res) => {
-    fs.readFile('slike/sala4.jpg', (err, podaci) => {
+    fs.readFile('img/sala4.jpg', (err, podaci) => {
         if (err) {
             res.writeHead(504, {'Content-Type': 'image/jpg'});
             throw err;
@@ -548,7 +548,7 @@ app.get('/slika4.jpg', (req, res) => {
 });
 
 app.get('/slika5.jpg', (req, res) => {
-    fs.readFile('slike/sala5.jpg', (err, podaci) => {
+    fs.readFile('img/sala5.jpg', (err, podaci) => {
         if (err) {
             res.writeHead(504, {'Content-Type': 'image/jpg'});
             throw err;
@@ -559,7 +559,7 @@ app.get('/slika5.jpg', (req, res) => {
 });
 
 app.get('/slika6.jpg', (req, res) => {
-    fs.readFile('slike/sala6.jpg', (err, podaci) => {
+    fs.readFile('img/sala6.jpg', (err, podaci) => {
         if (err) {
             res.writeHead(504, {'Content-Type': 'image/jpg'});
             throw err;
@@ -570,7 +570,7 @@ app.get('/slika6.jpg', (req, res) => {
 });
 
 app.get('/slika7.jpg', (req, res) => {
-    fs.readFile('slike/sala7.jpg', (err, podaci) => {
+    fs.readFile('img/sala7.jpg', (err, podaci) => {
         if (err) {
             res.writeHead(504, {'Content-Type': 'image/jpg'});
             throw err;
@@ -581,7 +581,7 @@ app.get('/slika7.jpg', (req, res) => {
 });
 
 app.get('/slika8.jpg', (req, res) => {
-    fs.readFile('slike/sala8.jpg', (err, podaci) => {
+    fs.readFile('img/sala8.jpg', (err, podaci) => {
         if (err) {
             res.writeHead(504, {'Content-Type': 'image/jpg'});
             throw err;
@@ -592,7 +592,7 @@ app.get('/slika8.jpg', (req, res) => {
 });
 
 app.get('/slika9.jpg', (req, res) => {
-    fs.readFile('slike/sala9.jpg', (err, podaci) => {
+    fs.readFile('img/sala9.jpg', (err, podaci) => {
         if (err) {
             res.writeHead(504, {'Content-Type': 'image/jpg'});
             throw err;
@@ -603,7 +603,7 @@ app.get('/slika9.jpg', (req, res) => {
 });
 
 app.get('/slika10.jpg', (req, res) => {
-    fs.readFile('slike/sala10.jpg', (err, podaci) => {
+    fs.readFile('img/sala10.jpg', (err, podaci) => {
         if (err) {
             res.writeHead(504, {'Content-Type': 'image/jpg'});
             throw err;
@@ -614,25 +614,25 @@ app.get('/slika10.jpg', (req, res) => {
 });
 
 app.get('/slike1', (req, res) => {
-    let putanje = {slika1: "/slike/sala1.jpg", slika2: "/slike/sala2.jpg", slika3: "/slike/sala3.jpg"};
+    let putanje = {slika1: "/img/sala1.jpg", slika2: "/img/sala2.jpg", slika3: "/img/sala3.jpg"};
     res.write(JSON.stringify(putanje));
     res.send();
 });
 
 app.get('/slike2', (req, res) => {
-    let putanje = {slika1: "/slike/sala4.jpg", slika2: "/slike/sala5.jpg", slika3: "/slike/sala6.jpg"};
+    let putanje = {slika1: "/img/sala4.jpg", slika2: "/img/sala5.jpg", slika3: "/img/sala6.jpg"};
     res.write(JSON.stringify(putanje));
     res.send();
 });
 
 app.get('/slike3', (req, res) => {
-    let putanje = {slika1: "/slike/sala7.jpg", slika2: "/slike/sala8.jpg", slika3: "/slike/sala9.jpg"};
+    let putanje = {slika1: "/img/sala7.jpg", slika2: "/img/sala8.jpg", slika3: "/img/sala9.jpg"};
     res.write(JSON.stringify(putanje));
     res.send();
 });
 
 app.get('/slike4', (req, res) => {
-    let putanje = {slika1: "/slike/sala10.jpg"};
+    let putanje = {slika1: "/img/sala10.jpg"};
     res.write(JSON.stringify(putanje));
     res.send();
 });

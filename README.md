@@ -1,6 +1,15 @@
+# Classroom Management App
+
+This repository contains a simple web application for making classroom reservations using an interactive calendar. Reservations can be periodic 
+(repeats on the same day every week of the semester) and non-periodic.
+
+![classroom-management-app-screenshots](https://user-images.githubusercontent.com/44180058/128711392-0ba34c1b-f2b1-434f-a738-32db4257ec14.jpeg)
+
 ## How To Use :wrench:
 
-To clone and run this application, you will need [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/download/) and a MySQL database installed on your computer (database specification can be found in [db.js](https://github.com/kkadusic/classroom-management-app/blob/master/database/db.js)).
+To clone and run this application, you will need [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/download/) and a MySQL database installed 
+on your computer. Database specification can be found in [db.js](https://github.com/kkadusic/classroom-management-app/blob/master/database/db.js) (configure 
+MySQL database with `username='root'` and `password='root'`).
 
 ```bash
 # Clone this repository

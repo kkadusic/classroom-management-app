@@ -1,7 +1,7 @@
 # Classroom Management App
 
 This repository contains a simple web application for making classroom reservations using an interactive calendar. Reservations can be periodic 
-(repeats on the same day every week of the semester) and non-periodic.
+(repeated on the same day every week of the semester) and non-periodic.
 
 ![classroom-management-app-screenshots](https://user-images.githubusercontent.com/44180058/128711392-0ba34c1b-f2b1-434f-a738-32db4257ec14.jpeg)
 

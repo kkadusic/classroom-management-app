@@ -29,7 +29,7 @@ ul li {
     text-decoration: none;
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width: 600px) {
     ul li {
         display: block;
         padding: 0.1em;

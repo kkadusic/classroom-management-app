@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 
-module.exports = function(sequelize) {
+module.exports = function (sequelize) {
     return sequelize.define('sala', {
         id: {
             type: Sequelize.INTEGER,

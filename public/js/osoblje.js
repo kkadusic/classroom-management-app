@@ -17,4 +17,3 @@ function prikaziOsobljeSaTrenutnimSalamaNaStranici(podaci) {
 setInterval(function () {
     Pozivi.ucitajOsobljeSaTrenutnimSalama()
 }, 30000);
-

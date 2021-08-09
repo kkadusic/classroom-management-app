@@ -101,29 +101,35 @@ input[type=checkbox] {
         display: block;
         margin-right: 40px;
     }
+
     #kalendar {
         width: 150px;
         overflow: hidden;
     }
+
     #kalendarDatum {
         padding: 20px;
         display: block;
     }
+
     .kalendarDan {
         margin-top: 10px;
         width: 50px;
         height: 25px;
         float: left;
     }
+
     .kalendarBroj {
         margin-top: 10px;
         margin-left: 65px;
         width: 40px;
         height: 28px;
     }
+
     .danBezPrikaza {
         display: none;
     }
+
     .dugme {
         margin-left: 70px;
     }

@@ -93,18 +93,23 @@ table tr:first-child td:first-child {
         display: block;
         margin-right: 40px;
     }
+
     td {
         min-width: 35px;
     }
+
     .tabelaSala {
         margin-left: -55px;
     }
+
     table tr:nth-child(2) {
         display: none;
     }
+
     table tr:first-child {
         display: none;
     }
+
     table td:first-child {
         display: none;
     }

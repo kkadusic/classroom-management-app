@@ -214,4 +214,3 @@ let Kalendar = (function () {
     }
 
 }());
-

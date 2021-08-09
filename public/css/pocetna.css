@@ -7,7 +7,7 @@
     height: 500px;
 }
 
-.slike{
+.slike {
     display: flex;
 }
 
@@ -44,10 +44,12 @@ p {
         flex: 70%;
         max-width: 70%;
     }
+
     ul li {
         display: block;
         margin-right: 40px;
     }
+
     .sadrzaj img {
         width: 276px;
         height: 160px;

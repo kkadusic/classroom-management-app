@@ -8,12 +8,10 @@
     height: 300px;
 }
 
-
 table, td, tr {
     margin: 0 auto;
     border: solid 1px;
 }
-
 
 @media only screen and (max-width: 600px) {
     ul li {

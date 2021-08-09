@@ -24,7 +24,6 @@ let Pozivi = (function () {
         ajax.send();
     }
 
-
     function ucitajJsonZauzecaImpl(iscrtaj) {
         console.log("ucitajJSonZauzeca");
         let ajax = new XMLHttpRequest();
@@ -76,7 +75,6 @@ let Pozivi = (function () {
         ajax.setRequestHeader("Content-Type", "application/json");
         ajax.send(JSON.stringify(periodicno));
     }
-
 
     function dodajVanrednoZauzeceImpl(datum, pocetak, kraj, naziv, predavac) {
         console.log("dodajVanrednoZauzeceImpl");
@@ -147,5 +145,3 @@ let Pozivi = (function () {
     }
 
 }());
-
-

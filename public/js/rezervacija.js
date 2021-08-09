@@ -21,7 +21,6 @@ function sljedeci() {
     Kalendar.sljedeci();
 }
 
-
 function rezervisi(kliknutiDan) {
     let mjesec = parseInt(Kalendar.dajMjesec(), 10) + 1;
     let dan = kliknutiDan.textContent.trim();
@@ -80,6 +79,3 @@ function dodajOsobljeIzBaze(osobljeJson) {
         osobljeSelect.add(option);
     }
 }
-
-
-

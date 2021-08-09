@@ -31,7 +31,7 @@ input[type=submit] {
     border-radius: 5px;
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width: 600px) {
     ul li {
         display: block;
         margin-right: 40px;
